@@ -1,0 +1,1108 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>손금보기</title>
+<meta name="description" content="두 손바닥 사진으로 읽는 전통 수상학 가이드. 네 개의 주선과 보조선, 손의 언덕을 하나씩 짚어 해석합니다.">
+<meta name="theme-color" content="#F4EFE6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#141210" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
+<meta property="og:title" content="손금보기">
+<meta property="og:description" content="두 손바닥 사진으로 읽는 전통 수상학 가이드">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A4%B2%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@200;300;400;500&display=swap">
+<style>
+:root{
+  --paper:#F4EFE6;
+  --card:#FBF8F2;
+  --ink:#241F1A;
+  --ink-2:#5C5248;
+  --ink-3:#8D8274;
+  --rule:#E2D8C7;
+  --rule-2:#CFC1A8;
+  --gold:#A5854A;
+  --clay:#A25A41;
+  --olive:#5D6B55;
+  --blue:#4E6373;
+  --shade:#EDE5D7;
+
+  --f-disp:"Gowun Batang","Nanum Myeongjo",serif;
+  --f-lat:"Cormorant Garamond","Gowun Batang",serif;
+  --f-body:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+
+  --gutter:26px;
+  --radius:20px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#141210; --card:#1C1916; --ink:#EFE8DA; --ink-2:#B4A997; --ink-3:#877D6F;
+    --rule:#332E27; --rule-2:#4A4238; --gold:#C9A868; --clay:#C98165; --olive:#8DA083;
+    --blue:#88A2B4; --shade:#201D18;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#141210; --card:#1C1916; --ink:#EFE8DA; --ink-2:#B4A997; --ink-3:#877D6F;
+  --rule:#332E27; --rule-2:#4A4238; --gold:#C9A868; --clay:#C98165; --olive:#8DA083;
+  --blue:#88A2B4; --shade:#201D18;
+}
+
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--f-body);font-weight:300;font-size:15px;line-height:1.72;
+  letter-spacing:-.01em;word-break:keep-all;
+}
+#app{
+  max-width:460px;margin:0 auto;min-height:100vh;min-height:100dvh;
+  background:var(--paper);
+  border-left:1px solid var(--rule);border-right:1px solid var(--rule);
+}
+@media (max-width:480px){ #app{border-left:0;border-right:0} }
+
+.bar{
+  position:sticky;top:0;z-index:20;display:flex;align-items:center;
+  height:54px;padding:0 var(--gutter);
+  background:color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--rule);
+}
+.bar__mark{font-family:var(--f-disp);font-weight:700;font-size:17px;letter-spacing:.06em;margin:0 auto}
+.bar__btn{
+  position:absolute;left:calc(var(--gutter) - 8px);width:34px;height:34px;
+  display:grid;place-items:center;background:none;border:0;color:var(--ink-2);
+  cursor:pointer;border-radius:50%;
+}
+.bar__btn[hidden]{display:none}
+.bar__btn:focus-visible{outline:1.5px solid var(--gold);outline-offset:2px}
+
+.view{display:none;padding:0 var(--gutter) 64px;animation:fade .45s ease both}
+.view.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+.eyebrow{font-family:var(--f-lat);font-size:11px;font-weight:500;letter-spacing:.34em;text-transform:uppercase;color:var(--gold);margin:0}
+.kicker{font-family:var(--f-lat);font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--ink-3);margin:0}
+h1{font-family:var(--f-disp);font-weight:700;font-size:38px;line-height:1.24;letter-spacing:-.02em;margin:14px 0 0;text-wrap:balance}
+h2{font-family:var(--f-disp);font-weight:700;font-size:21px;line-height:1.4;margin:0;letter-spacing:-.015em}
+h3{font-family:var(--f-disp);font-weight:700;font-size:16px;margin:0;letter-spacing:-.01em}
+p{margin:0}
+.lede{color:var(--ink-2);font-size:14.5px;line-height:1.8;margin-top:14px}
+.dim{color:var(--ink-3)}
+.stack{display:flex;flex-direction:column}
+.gap-8{gap:8px}.gap-12{gap:12px}.gap-16{gap:16px}.gap-24{gap:24px}
+.mt-32{margin-top:32px}.mt-40{margin-top:40px}.mt-48{margin-top:48px}
+
+.card{background:var(--card);border:1px solid var(--rule);border-radius:var(--radius);padding:22px}
+.card--flat{background:var(--shade);border-color:transparent}
+
+.btn{
+  display:flex;align-items:center;justify-content:center;gap:8px;width:100%;
+  min-height:54px;padding:0 20px;font-family:var(--f-body);font-size:15px;
+  font-weight:400;letter-spacing:.02em;border-radius:999px;
+  border:1px solid var(--ink);background:var(--ink);color:var(--paper);
+  cursor:pointer;transition:opacity .2s ease,transform .2s ease;
+}
+.btn:active{transform:scale(.985)}
+.btn:disabled{opacity:.35;cursor:default}
+.btn--ghost{background:transparent;color:var(--ink);border-color:var(--rule-2)}
+.btn--quiet{
+  background:none;border:0;color:var(--ink-3);min-height:auto;font-size:13px;
+  text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--rule-2);
+}
+.btn:focus-visible{outline:1.5px solid var(--gold);outline-offset:3px}
+
+.palm{width:100%;height:auto;display:block}
+.palm .skin{fill:var(--card);stroke:var(--rule-2);stroke-width:1.1}
+.palm .ln{fill:none;stroke-width:1.6;stroke-linecap:round}
+.palm .ln.life{stroke:var(--clay)} .palm .ln.head{stroke:var(--olive)}
+.palm .ln.heart{stroke:var(--gold)} .palm .ln.fate{stroke:var(--blue)}
+.palm .hair{fill:none;stroke:var(--rule-2);stroke-width:.8;opacity:.85}
+
+.figure{background:var(--shade);border-radius:26px;padding:26px 30px 20px}
+.figure__cap{
+  display:flex;justify-content:space-between;align-items:baseline;margin-top:14px;
+  padding-top:12px;border-top:1px solid var(--rule);font-family:var(--f-lat);
+  font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-3);
+}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:16px}
+.legend span{display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--ink-2)}
+.legend i{width:16px;height:1.6px;border-radius:2px;display:block}
+
+/* upload slots */
+.slots{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.slot{
+  position:relative;aspect-ratio:3/4;border-radius:18px;overflow:hidden;
+  border:1px dashed var(--rule-2);background:var(--card);display:grid;place-items:center;
+  cursor:pointer;padding:0;transition:border-color .25s ease;
+}
+.slot.filled{border-style:solid;border-color:var(--gold)}
+.slot:focus-visible{outline:1.5px solid var(--gold);outline-offset:3px}
+.slot__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.slot__inner{position:relative;text-align:center;padding:14px;pointer-events:none}
+.slot__hand{width:44px;opacity:.45;margin-bottom:8px;color:var(--ink)}
+.slot__label{font-family:var(--f-disp);font-weight:700;font-size:15px;color:var(--ink);display:block}
+.slot__hint{font-size:11.5px;color:var(--ink-3);margin-top:3px;letter-spacing:.02em;display:block}
+.slot__tag{
+  position:absolute;top:9px;left:9px;z-index:2;font-family:var(--f-lat);font-size:10px;
+  letter-spacing:.2em;text-transform:uppercase;
+  background:color-mix(in srgb, var(--paper) 86%, transparent);
+  color:var(--ink-2);border-radius:99px;padding:3px 9px;border:1px solid var(--rule);
+}
+.slot__redo{
+  position:absolute;right:9px;bottom:9px;z-index:2;font-size:11px;
+  background:color-mix(in srgb, var(--paper) 86%, transparent);
+  color:var(--ink-2);border:1px solid var(--rule);border-radius:99px;padding:4px 11px;
+}
+.slot input{display:none}
+
+.tips{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:11px}
+.tips li{display:flex;gap:11px;font-size:13.5px;color:var(--ink-2);line-height:1.62}
+.tips b{font-family:var(--f-lat);font-size:12px;letter-spacing:.1em;color:var(--gold);flex:none;padding-top:1px;font-weight:500}
+
+.field{display:flex;flex-direction:column;gap:9px}
+.field__label{font-size:12.5px;color:var(--ink-3)}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{
+  padding:9px 16px;border-radius:999px;border:1px solid var(--rule-2);background:transparent;
+  color:var(--ink-2);font-family:var(--f-body);font-size:13.5px;font-weight:300;cursor:pointer;transition:.2s ease;
+}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.chip:focus-visible{outline:1.5px solid var(--gold);outline-offset:2px}
+input[type="number"]{
+  width:100%;height:46px;padding:0 16px;border-radius:999px;border:1px solid var(--rule-2);
+  background:transparent;color:var(--ink);font-family:var(--f-body);font-size:14px;font-weight:300;
+}
+input[type="number"]:focus-visible{outline:1.5px solid var(--gold);outline-offset:2px}
+
+.notice{
+  border:1px solid var(--rule);border-radius:16px;padding:14px 16px;
+  font-size:12.5px;line-height:1.68;color:var(--ink-3);background:var(--shade);
+}
+
+/* camera sheet */
+.sheet{position:fixed;inset:0;z-index:60;background:#0E0C0A;display:flex;flex-direction:column;color:#F2EBDD}
+.sheet[hidden]{display:none}
+.sheet__top{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:calc(env(safe-area-inset-top) + 14px) 20px 14px;flex:none;
+}
+.sheet__title{font-family:var(--f-disp);font-weight:700;font-size:16px;letter-spacing:.04em}
+.sheet__x{background:none;border:0;color:#F2EBDD;padding:6px;cursor:pointer;display:grid;place-items:center;border-radius:50%}
+.sheet__x:focus-visible{outline:1.5px solid #C9A868;outline-offset:2px}
+.cam__stage{position:relative;flex:1;overflow:hidden;background:#0E0C0A}
+.cam__stage video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#0E0C0A}
+.cam__stage video.mirror{transform:scaleX(-1)}
+.cam__guide{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:.34}
+.cam__guide path,.cam__guide rect{fill:none;stroke:#F2EBDD;stroke-width:2;stroke-linejoin:round}
+.cam__msg{
+  position:absolute;left:50%;bottom:22px;transform:translateX(-50%);
+  max-width:82%;text-align:center;font-size:13px;line-height:1.6;
+  background:rgba(14,12,10,.72);border:1px solid rgba(242,235,221,.22);
+  border-radius:14px;padding:10px 15px;
+}
+.cam__msg[hidden]{display:none}
+.sheet__bottom{
+  flex:none;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
+  gap:14px;padding:22px 26px calc(env(safe-area-inset-bottom) + 26px);
+}
+.cam__side{
+  background:none;border:1px solid rgba(242,235,221,.3);color:#F2EBDD;
+  border-radius:999px;padding:10px 0;font-family:var(--f-body);font-size:12.5px;
+  font-weight:300;cursor:pointer;
+}
+.cam__side:focus-visible{outline:1.5px solid #C9A868;outline-offset:2px}
+.shutter{
+  width:72px;height:72px;border-radius:50%;border:2px solid rgba(242,235,221,.55);
+  background:none;display:grid;place-items:center;cursor:pointer;padding:0;justify-self:center;
+}
+.shutter::after{content:"";width:56px;height:56px;border-radius:50%;background:#F2EBDD;transition:transform .15s ease}
+.shutter:active::after{transform:scale(.9)}
+.shutter:disabled{opacity:.4}
+.shutter:focus-visible{outline:1.5px solid #C9A868;outline-offset:4px}
+
+/* loader */
+.loader{padding:56px 0 0;text-align:center}
+.loader__art{width:150px;margin:0 auto}
+.loader .ln{stroke-dasharray:200;stroke-dashoffset:200;animation:draw 2.6s ease-in-out infinite}
+.loader .ln.head{animation-delay:.32s} .loader .ln.heart{animation-delay:.64s} .loader .ln.fate{animation-delay:.96s}
+@keyframes draw{0%{stroke-dashoffset:200}38%{stroke-dashoffset:0}72%{stroke-dashoffset:0;opacity:1}92%,100%{stroke-dashoffset:0;opacity:0}}
+@media (prefers-reduced-motion:reduce){.loader .ln{animation:none;stroke-dashoffset:0}.view{animation:none}}
+.loader__phase{font-family:var(--f-disp);font-size:17px;margin-top:30px;transition:opacity .4s ease}
+.loader__sub{font-size:12.5px;color:var(--ink-3);margin-top:8px;transition:opacity .4s ease}
+
+/* result */
+.hero-word{font-family:var(--f-disp);font-weight:700;font-size:27px;line-height:1.46;letter-spacing:-.02em;text-wrap:balance}
+.kw{display:flex;flex-wrap:wrap;gap:7px}
+.kw span{font-size:12px;color:var(--ink-2);border:1px solid var(--rule-2);border-radius:999px;padding:5px 13px}
+.sec-head{display:flex;align-items:baseline;gap:12px}
+.sec-head .num{font-family:var(--f-lat);font-size:13px;font-weight:500;letter-spacing:.1em;color:var(--gold);flex:none}
+.line-card{border-left:2px solid var(--accent,var(--gold))}
+.line-card .swatch{width:26px;height:1.8px;border-radius:2px;background:var(--accent,var(--gold))}
+.field-row{display:flex;flex-direction:column;gap:5px}
+.field-row .k{font-family:var(--f-lat);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-3)}
+.field-row .v{font-size:14px;line-height:1.76;color:var(--ink-2)}
+.field-row .v.strong{color:var(--ink)}
+.two{display:grid;grid-template-columns:1fr;gap:14px}
+.mini{display:flex;flex-direction:column;gap:4px;padding:14px 0;border-bottom:1px solid var(--rule)}
+.mini:last-child{border-bottom:0;padding-bottom:0}
+.mini__t{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
+.mini__t b{font-family:var(--f-disp);font-size:14.5px;font-weight:700}
+.mini__t em{font-style:normal;font-size:11px;color:var(--gold);border:1px solid var(--rule-2);border-radius:99px;padding:1px 8px}
+.mini p{font-size:13.5px;line-height:1.72;color:var(--ink-2)}
+.quote{font-family:var(--f-disp);font-size:18px;line-height:1.66;text-wrap:balance}
+.shots{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.shots img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:14px;border:1px solid var(--rule)}
+
+/* guide */
+details{border-bottom:1px solid var(--rule)}
+details:first-of-type{border-top:1px solid var(--rule)}
+summary{list-style:none;cursor:pointer;padding:17px 0;display:flex;align-items:center;justify-content:space-between;gap:12px}
+summary::-webkit-details-marker{display:none}
+summary:focus-visible{outline:1.5px solid var(--gold);outline-offset:2px;border-radius:6px}
+.sum__l{display:flex;align-items:baseline;gap:11px}
+.sum__n{font-family:var(--f-lat);font-size:12px;letter-spacing:.14em;color:var(--gold)}
+.sum__t{font-family:var(--f-disp);font-weight:700;font-size:16px}
+.sum__t small{font-family:var(--f-body);font-weight:300;font-size:11.5px;color:var(--ink-3);margin-left:6px}
+.caret{flex:none;color:var(--ink-3);transition:transform .25s ease}
+details[open] .caret{transform:rotate(180deg)}
+.det{padding:2px 0 22px;display:flex;flex-direction:column;gap:13px}
+.det p{font-size:13.5px;line-height:1.76;color:var(--ink-2)}
+.det .lbl{font-family:var(--f-lat);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:3px}
+.det ul{margin:0;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:7px}
+.det ul li{font-size:13.5px;line-height:1.7;color:var(--ink-2);padding-left:14px;position:relative}
+.det ul li::before{content:"";position:absolute;left:0;top:.72em;width:5px;height:1px;background:var(--rule-2)}
+.det ul li b{font-weight:500;color:var(--ink)}
+.caution{background:var(--shade);border-radius:14px;padding:12px 15px;font-size:12.5px;line-height:1.68;color:var(--ink-3)}
+.src{font-size:12px;line-height:1.85;color:var(--ink-3)}
+.src b{font-weight:400;color:var(--ink-2)}
+
+footer{padding:34px var(--gutter) calc(env(safe-area-inset-bottom) + 46px);text-align:center;border-top:1px solid var(--rule)}
+footer p{font-size:11.5px;line-height:1.8;color:var(--ink-3)}
+</style>
+</head>
+<body>
+<div id="app">
+  <header class="bar">
+    <button class="bar__btn" id="back" hidden aria-label="뒤로">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+    </button>
+    <span class="bar__mark">손금보기</span>
+  </header>
+
+  <!-- ══════════ INTRO ══════════ -->
+  <section class="view on" id="v-intro">
+    <div style="padding-top:44px">
+      <p class="eyebrow">Palm Reading Journal</p>
+      <h1>손 안의<br>작은 지도</h1>
+      <p class="lede">두 손바닥을 찍어 올리면, 전통 수상학이 오래 읽어온 방식대로 네 개의 주선과 보조선, 손의 언덕을 하나씩 짚어 해석합니다.</p>
+    </div>
+
+    <div class="figure mt-40">
+      <svg class="palm" viewBox="0 0 200 268" role="img" aria-label="손바닥의 주요 네 선 위치">
+        <g class="skin">
+          <rect x="61" y="42" width="21" height="80" rx="10.5"/>
+          <rect x="86" y="30" width="22" height="92" rx="11"/>
+          <rect x="112" y="38" width="21" height="84" rx="10.5"/>
+          <rect x="137" y="58" width="19" height="66" rx="9.5"/>
+          <rect x="52" y="100" width="106" height="126" rx="36"/>
+          <rect x="18" y="132" width="20" height="62" rx="10" transform="rotate(-32 28 163)"/>
+        </g>
+        <g class="hair">
+          <path d="M64 72h15M89 62h16M115 68h15M139 86h14"/>
+          <path d="M64 92h15M89 84h16M115 90h15M139 104h14"/>
+          <path d="M66 216h78"/>
+        </g>
+        <g>
+          <path class="ln life" d="M76 118 Q62 148 66 178 Q69 199 82 210"/>
+          <path class="ln head" d="M74 138 Q106 150 140 164"/>
+          <path class="ln heart" d="M150 128 Q118 112 80 124"/>
+          <path class="ln fate" d="M106 208 Q110 168 104 134"/>
+        </g>
+        <g fill="var(--paper)" stroke="var(--rule-2)" stroke-width=".9">
+          <circle cx="64" cy="164" r="9"/><circle cx="112" cy="152" r="9"/>
+          <circle cx="116" cy="118" r="9"/><circle cx="106" cy="190" r="9"/>
+        </g>
+        <g fill="var(--ink-2)" font-family="Cormorant Garamond, serif" font-size="10" text-anchor="middle">
+          <text x="64" y="167.5">01</text><text x="112" y="155.5">02</text>
+          <text x="116" y="121.5">03</text><text x="106" y="193.5">04</text>
+        </g>
+      </svg>
+      <div class="legend">
+        <span><i style="background:var(--clay)"></i>01 생명선</span>
+        <span><i style="background:var(--olive)"></i>02 두뇌선</span>
+        <span><i style="background:var(--gold)"></i>03 감정선</span>
+        <span><i style="background:var(--blue)"></i>04 운명선</span>
+      </div>
+      <div class="figure__cap"><span>The Four Lines</span><span>手相</span></div>
+    </div>
+
+    <div class="stack gap-12 mt-40">
+      <button class="btn" id="go-capture">두 손 사진으로 시작하기</button>
+      <button class="btn btn--ghost" id="go-guide">손금 사전 먼저 보기</button>
+    </div>
+
+    <div class="notice mt-32">
+      손금은 과학적으로 검증된 성격·미래 예측법이 아닙니다. 이곳의 해석은 동서양 상학이 축적해 온 상징 체계를 오늘의 나를 돌아보는 언어로 옮긴 것입니다.
+    </div>
+  </section>
+
+  <!-- ══════════ CAPTURE ══════════ -->
+  <section class="view" id="v-capture">
+    <div style="padding-top:34px">
+      <p class="kicker">Step 01</p>
+      <h2 style="margin-top:10px;font-size:24px">두 손바닥을 담아주세요</h2>
+      <p class="lede">전통 수상학은 주로 쓰지 않는 손에서 타고난 기질을, 주로 쓰는 손에서 지금 만들어가는 결을 읽습니다. 그래서 두 손이 모두 필요합니다.</p>
+    </div>
+
+    <div class="slots mt-32">
+      <button class="slot" id="slot-left" type="button" data-hand="left">
+        <span class="slot__tag">Left</span>
+        <span class="slot__inner">
+          <svg class="slot__hand" viewBox="0 0 200 268" fill="none" stroke="currentColor" stroke-width="7" stroke-linejoin="round" aria-hidden="true">
+            <rect x="61" y="42" width="21" height="80" rx="10.5"/><rect x="86" y="30" width="22" height="92" rx="11"/>
+            <rect x="112" y="38" width="21" height="84" rx="10.5"/><rect x="137" y="58" width="19" height="66" rx="9.5"/>
+            <rect x="52" y="100" width="106" height="126" rx="36"/>
+            <rect x="18" y="132" width="20" height="62" rx="10" transform="rotate(-32 28 163)"/>
+          </svg>
+          <span class="slot__label">왼손</span>
+          <span class="slot__hint">눌러서 촬영</span>
+        </span>
+      </button>
+
+      <button class="slot" id="slot-right" type="button" data-hand="right">
+        <span class="slot__tag">Right</span>
+        <span class="slot__inner">
+          <svg class="slot__hand" viewBox="0 0 200 268" fill="none" stroke="currentColor" stroke-width="7" stroke-linejoin="round" style="transform:scaleX(-1)" aria-hidden="true">
+            <rect x="61" y="42" width="21" height="80" rx="10.5"/><rect x="86" y="30" width="22" height="92" rx="11"/>
+            <rect x="112" y="38" width="21" height="84" rx="10.5"/><rect x="137" y="58" width="19" height="66" rx="9.5"/>
+            <rect x="52" y="100" width="106" height="126" rx="36"/>
+            <rect x="18" y="132" width="20" height="62" rx="10" transform="rotate(-32 28 163)"/>
+          </svg>
+          <span class="slot__label">오른손</span>
+          <span class="slot__hint">눌러서 촬영</span>
+        </span>
+      </button>
+    </div>
+    <input type="file" id="file-left" accept="image/*" hidden>
+    <input type="file" id="file-right" accept="image/*" hidden>
+
+    <div class="card mt-32">
+      <p class="eyebrow">Shooting Notes</p>
+      <ul class="tips" style="margin-top:16px">
+        <li><b>01</b><span>창가의 자연광 아래에서, 플래시 없이 찍으면 선의 깊이가 가장 잘 남습니다.</span></li>
+        <li><b>02</b><span>손을 억지로 펴거나 오므리지 말고 자연스럽게 편 상태로 두세요.</span></li>
+        <li><b>03</b><span>손바닥 정면에서 수직으로, 손목 주름까지 프레임에 넣어주세요.</span></li>
+        <li><b>04</b><span>손 그림자가 손바닥 위로 지지 않는 각도를 찾으면 잔선까지 읽힙니다.</span></li>
+      </ul>
+    </div>
+
+    <div class="card mt-32 stack gap-24">
+      <div>
+        <p class="eyebrow">Optional</p>
+        <p class="dim" style="font-size:13px;margin-top:8px">비워두어도 해석은 진행됩니다. 적어주시면 양손 대조가 더 정확해집니다.</p>
+      </div>
+      <div class="field">
+        <span class="field__label">주로 쓰는 손</span>
+        <div class="chips" id="dom">
+          <button class="chip" type="button" aria-pressed="false" data-v="오른손">오른손</button>
+          <button class="chip" type="button" aria-pressed="false" data-v="왼손">왼손</button>
+          <button class="chip" type="button" aria-pressed="false" data-v="양손">양손 모두</button>
+        </div>
+      </div>
+      <div class="field">
+        <span class="field__label">지금 가장 마음이 가 있는 곳</span>
+        <div class="chips" id="focus">
+          <button class="chip" type="button" aria-pressed="false" data-v="일과 방향">일과 방향</button>
+          <button class="chip" type="button" aria-pressed="false" data-v="관계와 감정">관계와 감정</button>
+          <button class="chip" type="button" aria-pressed="false" data-v="나 자신">나 자신</button>
+          <button class="chip" type="button" aria-pressed="false" data-v="변화의 시기">변화의 시기</button>
+        </div>
+      </div>
+      <div class="field">
+        <span class="field__label">태어난 해</span>
+        <input type="number" id="birth" inputmode="numeric" placeholder="예 · 1994" min="1900" max="2030">
+      </div>
+    </div>
+
+    <div class="stack gap-12 mt-32">
+      <button class="btn" id="analyze" disabled>손금 해석 시작</button>
+      <p class="dim" id="analyze-note" style="font-size:12px;text-align:center">두 손 사진이 모두 준비되면 활성화됩니다</p>
+    </div>
+  </section>
+
+  <!-- ══════════ READING ══════════ -->
+  <section class="view" id="v-reading">
+    <div class="loader" id="loader">
+      <svg class="palm loader__art" viewBox="0 0 200 268" aria-hidden="true">
+        <g class="skin">
+          <rect x="61" y="42" width="21" height="80" rx="10.5"/><rect x="86" y="30" width="22" height="92" rx="11"/>
+          <rect x="112" y="38" width="21" height="84" rx="10.5"/><rect x="137" y="58" width="19" height="66" rx="9.5"/>
+          <rect x="52" y="100" width="106" height="126" rx="36"/>
+          <rect x="18" y="132" width="20" height="62" rx="10" transform="rotate(-32 28 163)"/>
+        </g>
+        <g>
+          <path class="ln life" d="M76 118 Q62 148 66 178 Q69 199 82 210"/>
+          <path class="ln head" d="M74 138 Q106 150 140 164"/>
+          <path class="ln heart" d="M150 128 Q118 112 80 124"/>
+          <path class="ln fate" d="M106 208 Q110 168 104 134"/>
+        </g>
+      </svg>
+      <p class="loader__phase" id="phase">손의 모양을 살피는 중</p>
+      <p class="loader__sub" id="phase-sub">30초에서 1분 정도 걸립니다</p>
+      <div style="margin-top:34px"><button class="btn btn--quiet" id="stop">중단하기</button></div>
+    </div>
+    <div id="result" hidden></div>
+  </section>
+
+  <!-- ══════════ GUIDE ══════════ -->
+  <section class="view" id="v-guide">
+    <div style="padding-top:34px">
+      <p class="eyebrow">Reference</p>
+      <h2 style="margin-top:10px;font-size:24px">손금 사전</h2>
+      <p class="lede">해석에 쓰이는 선과 언덕의 이름, 그리고 전통이 각 형태에 붙여온 상징을 정리했습니다. 사진 없이도 손바닥과 나란히 놓고 읽을 수 있습니다.</p>
+    </div>
+
+    <div class="mt-32">
+      <p class="kicker" style="margin-bottom:14px">Ⅰ · 네 개의 주선</p>
+
+      <details>
+        <summary>
+          <span class="sum__l"><span class="sum__n">01</span><span class="sum__t">생명선<small>生命線 · Life Line</small></span></span>
+          <svg class="caret" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+        </summary>
+        <div class="det">
+          <p><span class="lbl">위치</span>검지와 엄지 사이에서 시작해 엄지 뿌리의 금성구를 감싸며 손목 쪽으로 내려가는 곡선.</p>
+          <p><span class="lbl">전통적 상징</span>수명이 아니라 생활의 리듬과 활력, 삶을 대하는 태도의 폭을 봅니다.</p>
+          <div><span class="lbl">형태별 읽기</span>
+            <ul>
+              <li><b>크게 벌어진 활 모양</b> · 활동 반경이 넓고 몸을 쓰는 일에서 에너지를 얻는 결</li>
+              <li><b>엄지에 바짝 붙은 선</b> · 조심스럽고 안쪽으로 힘을 모으는 생활 리듬</li>
+              <li><b>안쪽에 나란한 두 번째 선</b> · 화성선. 회복과 지지의 상징으로 읽어온 형태</li>
+              <li><b>끊겼다 겹치며 이어짐</b> · 생활 환경이 한 번 옮겨간 자리로 봅니다</li>
+              <li><b>사슬처럼 얽힌 구간</b> · 그 시기의 리듬이 고르지 않았다는 표시</li>
+            </ul>
+          </div>
+          <p class="caution">길이로 수명이나 건강을 판단하지 않습니다. 벤험(W. G. Benham) 이후의 근대 수상학도 이 해석만은 분명히 부정했습니다.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          <span class="sum__l"><span class="sum__n">02</span><span class="sum__t">두뇌선<small>頭腦線 · Head Line</small></span></span>
+          <svg class="caret" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+        </summary>
+        <div class="det">
+          <p><span class="lbl">위치</span>생명선과 같은 지점이나 그 위에서 출발해 손바닥 가운데를 가로지르는 선.</p>
+          <p><span class="lbl">전통적 상징</span>사고의 방식과 집중의 결. 머리가 좋고 나쁨이 아니라 '어떻게 생각하는가'를 봅니다.</p>
+          <div><span class="lbl">형태별 읽기</span>
+            <ul>
+              <li><b>곧게 가로지름</b> · 사실과 구조를 먼저 세우는 현실적 사고</li>
+              <li><b>월구 쪽으로 기울어짐</b> · 이미지와 연상으로 생각을 옮기는 상상형</li>
+              <li><b>끝이 둘로 갈라짐</b> · 작가의 갈래. 두 관점을 함께 굴리는 사고</li>
+              <li><b>생명선과 붙어 시작</b> · 신중하게 재고 움직이는 출발</li>
+              <li><b>생명선과 떨어져 시작</b> · 독립적이고 결단이 빠른 출발</li>
+              <li><b>짧고 또렷함</b> · 한 번에 하나를 깊게 파는 집중</li>
+            </ul>
+          </div>
+          <p class="caution">사진만으로 지능이나 학습 능력을 알 수 없습니다.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          <span class="sum__l"><span class="sum__n">03</span><span class="sum__t">감정선<small>感情線 · Heart Line</small></span></span>
+          <svg class="caret" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+        </summary>
+        <div class="det">
+          <p><span class="lbl">위치</span>새끼손가락 아래 손날에서 시작해 검지·중지 방향으로 가로지르는 위쪽 선.</p>
+          <p><span class="lbl">전통적 상징</span>감정을 다루고 드러내는 방식, 관계에서 취하는 거리.</p>
+          <div><span class="lbl">형태별 읽기</span>
+            <ul>
+              <li><b>검지 아래까지 길게</b> · 상대에게 바라는 상이 뚜렷한 애정관</li>
+              <li><b>중지 아래에서 멈춤</b> · 자기 중심을 지키며 안정을 먼저 찾는 결</li>
+              <li><b>위로 크게 휜 곡선</b> · 감정이 밖으로 잘 나오는 표현형</li>
+              <li><b>직선에 가까움</b> · 안에서 정리한 뒤 꺼내는 절제형</li>
+              <li><b>끝에 잔가지가 여럿</b> · 감정의 진폭이 넓고 상대에 따라 결이 달라짐</li>
+              <li><b>사슬 모양</b> · 마음이 여러 곳에 나뉘어 있던 시기의 표시</li>
+            </ul>
+          </div>
+          <p class="caution">연애나 결혼의 결과를 예측하지 않습니다.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          <span class="sum__l"><span class="sum__n">04</span><span class="sum__t">운명선<small>運命線 · Fate Line</small></span></span>
+          <svg class="caret" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+        </summary>
+        <div class="det">
+          <p><span class="lbl">위치</span>손목이나 손바닥 중간에서 중지 뿌리의 토성구를 향해 오르는 세로선. 토성선이라고도 합니다.</p>
+          <p><span class="lbl">전통적 상징</span>일과 삶의 방향, 사회 속에서 맡게 되는 역할의 흐름.</p>
+          <div><span class="lbl">형태별 읽기</span>
+            <ul>
+              <li><b>손목에서 곧게 올라감</b> · 이른 시기부터 한 궤도를 걸어온 형태</li>
+              <li><b>손바닥 중간에서 시작</b> · 스스로 방향을 정한 시점이 있었던 결</li>
+              <li><b>끊겼다 옆에서 다시 시작</b> · 진로의 전환. 단절이 아니라 갈아탐으로 읽습니다</li>
+              <li><b>월구에서 올라옴</b> · 타인과의 인연이나 바깥의 기회가 길을 여는 유형</li>
+              <li><b>흐리거나 보이지 않음</b> · 정해진 궤도보다 상황에 맞춰 움직이는 유형</li>
+            </ul>
+          </div>
+          <p class="caution">선이 흐리거나 없어도 불운을 뜻하지 않습니다. 자유롭게 움직인 손일수록 옅게 남습니다.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="mt-40">
+      <p class="kicker" style="margin-bottom:14px">Ⅱ · 보조선</p>
+      <div class="card">
+        <div class="mini"><div class="mini__t"><b>태양선</b><em>太陽線 · Apollo</em></div><p>약지 뿌리로 향하는 세로선. 인정과 평판, 심미안의 상징. 또렷하면 자기 색이 밖으로 잘 전해지는 결로 읽습니다.</p></div>
+        <div class="mini"><div class="mini__t"><b>결혼선</b><em>結婚線 · Union</em></div><p>새끼손가락 아래 손날의 짧은 가로선. 깊이 관여한 관계의 상징이며, 개수를 결혼 횟수로 읽지 않습니다.</p></div>
+        <div class="mini"><div class="mini__t"><b>건강선</b><em>健康線 · Mercury</em></div><p>손바닥을 비스듬히 가로지르는 선. 전통적으로 소화와 신경의 결에 빗대었으나 의학적 진단이 아닙니다.</p></div>
+        <div class="mini"><div class="mini__t"><b>금성대</b><em>金星帶 · Girdle of Venus</em></div><p>감정선 위를 반원으로 감싸는 선. 감수성과 예민함, 자극에 민감하게 반응하는 결.</p></div>
+        <div class="mini"><div class="mini__t"><b>직감선</b><em>直感線 · Intuition</em></div><p>월구에서 수성구 쪽으로 휘어 오르는 활선. 설명보다 먼저 감이 오는 유형에 빗대어 왔습니다.</p></div>
+      </div>
+    </div>
+
+    <div class="mt-40">
+      <p class="kicker" style="margin-bottom:14px">Ⅲ · 일곱 언덕</p>
+      <p class="dim" style="font-size:13px;margin-bottom:16px">손바닥에서 도톰하게 솟은 부분을 구(丘)라 부릅니다. 벤험이 정리한 체계에서는 어느 구가 발달했는지로 기질의 무게중심을 봅니다.</p>
+      <div class="card">
+        <div class="mini"><div class="mini__t"><b>목성구</b><em>검지 아래</em></div><p>자존과 주도, 이끄는 자리에 서고 싶은 마음.</p></div>
+        <div class="mini"><div class="mini__t"><b>토성구</b><em>중지 아래</em></div><p>인내와 성실, 혼자 있는 시간에서 회복하는 결.</p></div>
+        <div class="mini"><div class="mini__t"><b>태양구</b><em>약지 아래</em></div><p>심미와 표현, 아름다움을 알아보는 눈.</p></div>
+        <div class="mini"><div class="mini__t"><b>수성구</b><em>새끼손가락 아래</em></div><p>소통과 재치, 사람 사이를 잇는 감각.</p></div>
+        <div class="mini"><div class="mini__t"><b>금성구</b><em>엄지 뿌리</em></div><p>애정과 체력, 생활을 밀고 가는 힘.</p></div>
+        <div class="mini"><div class="mini__t"><b>월구</b><em>손목 바깥쪽</em></div><p>상상과 감수성, 낯선 곳으로 향하는 마음.</p></div>
+        <div class="mini"><div class="mini__t"><b>화성구</b><em>손바닥 양옆 가운데</em></div><p>제1구는 나아가는 용기, 제2구는 버티는 저항력.</p></div>
+      </div>
+    </div>
+
+    <div class="mt-40">
+      <p class="kicker" style="margin-bottom:14px">Ⅳ · 손의 네 모양</p>
+      <p class="dim" style="font-size:13px;margin-bottom:16px">다르팡티니가 나눈 손의 유형을 현대 수상학이 네 원소로 정리한 분류입니다. 손바닥의 길이와 손가락 길이의 비율로 봅니다.</p>
+      <div class="card">
+        <div class="mini"><div class="mini__t"><b>지(地)의 손</b><em>Earth</em></div><p>네모난 손바닥에 짧은 손가락. 실용과 꾸준함, 손에 잡히는 일에서 만족을 얻는 결.</p></div>
+        <div class="mini"><div class="mini__t"><b>풍(風)의 손</b><em>Air</em></div><p>네모난 손바닥에 긴 손가락. 언어와 분석, 생각을 정리해 전하는 감각.</p></div>
+        <div class="mini"><div class="mini__t"><b>수(水)의 손</b><em>Water</em></div><p>긴 손바닥에 긴 손가락. 감수성과 직관, 분위기를 먼저 읽는 결.</p></div>
+        <div class="mini"><div class="mini__t"><b>화(火)의 손</b><em>Fire</em></div><p>긴 손바닥에 짧은 손가락. 추진과 즉흥, 먼저 움직이며 길을 찾는 결.</p></div>
+      </div>
+    </div>
+
+    <div class="mt-40">
+      <p class="kicker" style="margin-bottom:14px">Ⅴ · 읽는 순서</p>
+      <div class="card card--flat">
+        <p style="font-family:var(--f-disp);font-size:15.5px;line-height:1.9">손 모양 → 네 주선 → 보조선 → 언덕 → 양손 비교</p>
+        <p class="dim" style="font-size:13px;margin-top:12px">한 가지 선만 떼어 보지 않는 것이 상학의 오랜 원칙입니다. 선 하나가 약해도 다른 선과 언덕이 그 자리를 받치고 있으면 전체의 결은 달라집니다. 주로 쓰지 않는 손은 타고난 기질, 주로 쓰는 손은 지금 만들어가는 결로 대조해 읽습니다.</p>
+      </div>
+    </div>
+
+    <div class="mt-40">
+      <p class="kicker" style="margin-bottom:14px">참고한 체계</p>
+      <p class="src">
+        <b>마의상법(麻衣相法)</b> · 송대에 정리된 동양 상법의 기본서, 손의 형태와 문양을 사람의 기질에 빗대어 읽는 틀<br>
+        <b>유장상법(柳莊相法)</b> · 명대 원충철이 정리한 상법서, 손금과 언덕의 세부 관법<br>
+        <b>Cheiro, 『The Language of the Hand』</b> · 1894, 서양 근대 수상학의 대중적 표준을 세운 저작<br>
+        <b>W. G. Benham, 『The Laws of Scientific Hand Reading』</b> · 1900, 일곱 구 체계와 선의 형태 분류를 집대성<br>
+        <b>C. S. d'Arpentigny, 『La Chirognomonie』</b> · 1843, 손 모양에 따른 유형 분류의 출발점
+      </p>
+    </div>
+  </section>
+
+  <footer>
+    <p>손금은 과학적으로 검증된 성격·미래 예측법이 아닙니다.<br>여기의 해석은 전통 상학의 상징을 오늘의 나를 돌아보는 언어로 옮긴 것입니다.</p>
+  </footer>
+</div>
+
+<!-- ══════════ CAMERA SHEET ══════════ -->
+<div class="sheet" id="cam" hidden role="dialog" aria-modal="true" aria-label="손바닥 촬영">
+  <div class="sheet__top">
+    <span class="sheet__title" id="cam-title">왼손</span>
+    <button class="sheet__x" id="cam-close" aria-label="닫기">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </div>
+  <div class="cam__stage">
+    <video id="cam-video" playsinline muted autoplay></video>
+    <svg class="cam__guide" id="cam-guide" viewBox="0 0 200 268" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+      <g>
+        <rect x="61" y="42" width="21" height="80" rx="10.5"/><rect x="86" y="30" width="22" height="92" rx="11"/>
+        <rect x="112" y="38" width="21" height="84" rx="10.5"/><rect x="137" y="58" width="19" height="66" rx="9.5"/>
+        <rect x="52" y="100" width="106" height="126" rx="36"/>
+        <rect x="18" y="132" width="20" height="62" rx="10" transform="rotate(-32 28 163)"/>
+      </g>
+    </svg>
+    <p class="cam__msg" id="cam-msg" hidden></p>
+  </div>
+  <div class="sheet__bottom">
+    <button class="cam__side" id="cam-album" type="button">앨범에서</button>
+    <button class="shutter" id="cam-shot" type="button" aria-label="촬영"></button>
+    <button class="cam__side" id="cam-flip" type="button">카메라 전환</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  var $  = function(s){ return document.querySelector(s); };
+  var $$ = function(s){ return Array.prototype.slice.call(document.querySelectorAll(s)); };
+
+  var state = {
+    left:null, right:null,          // data URL
+    dominantHand:"", focus:"", birthYear:"",
+    ctl:null
+  };
+
+  /* ───────── routing ───────── */
+  var stack = ["intro"];
+  function go(name, push){
+    $$(".view").forEach(function(v){ v.classList.toggle("on", v.id === "v-" + name); });
+    if(push !== false) stack.push(name);
+    $("#back").hidden = stack.length < 2;
+    window.scrollTo(0,0);
+  }
+  $("#back").addEventListener("click", function(){
+    if(state.ctl){ state.ctl.abort(); state.ctl = null; }
+    stack.pop();
+    go(stack[stack.length-1] || "intro", false);
+  });
+  $("#go-capture").addEventListener("click", function(){ go("capture"); });
+  $("#go-guide").addEventListener("click", function(){ go("guide"); });
+
+  /* ───────── chips ───────── */
+  function chipGroup(id, key){
+    $("#"+id).addEventListener("click", function(e){
+      var b = e.target.closest(".chip"); if(!b) return;
+      var on = b.getAttribute("aria-pressed") === "true";
+      $$("#"+id+" .chip").forEach(function(c){ c.setAttribute("aria-pressed","false"); });
+      b.setAttribute("aria-pressed", on ? "false" : "true");
+      state[key] = on ? "" : b.dataset.v;
+    });
+  }
+  chipGroup("dom","dominantHand");
+  chipGroup("focus","focus");
+  $("#birth").addEventListener("input", function(e){ state.birthYear = e.target.value; });
+
+  /* ───────── image helpers ───────── */
+  var MAX_EDGE = 1200;
+
+  function canvasToDataUrl(source, w, h){
+    var scale = Math.min(1, MAX_EDGE / Math.max(w, h));
+    var cw = Math.round(w * scale), ch = Math.round(h * scale);
+    var c = document.createElement("canvas");
+    c.width = cw; c.height = ch;
+    c.getContext("2d").drawImage(source, 0, 0, cw, ch);
+    return c.toDataURL("image/jpeg", 0.82);
+  }
+
+  function fileToDataUrl(file){
+    return new Promise(function(resolve, reject){
+      if(window.createImageBitmap){
+        createImageBitmap(file, { imageOrientation:"from-image" }).then(function(bmp){
+          var url = canvasToDataUrl(bmp, bmp.width, bmp.height);
+          if(bmp.close) bmp.close();
+          resolve(url);
+        }).catch(function(){ viaImg(file).then(resolve, reject); });
+      } else {
+        viaImg(file).then(resolve, reject);
+      }
+    });
+  }
+  function viaImg(file){
+    return new Promise(function(resolve, reject){
+      var url = URL.createObjectURL(file);
+      var img = new Image();
+      img.onload = function(){
+        var out = canvasToDataUrl(img, img.naturalWidth, img.naturalHeight);
+        URL.revokeObjectURL(url);
+        resolve(out);
+      };
+      img.onerror = function(){ URL.revokeObjectURL(url); reject(new Error("decode_failed")); };
+      img.src = url;
+    });
+  }
+
+  function setShot(hand, dataUrl){
+    state[hand] = dataUrl;
+    var slot = $("#slot-" + hand);
+    var old = slot.querySelector(".slot__img");
+    if(old) old.remove();
+    var img = document.createElement("img");
+    img.className = "slot__img";
+    img.alt = (hand === "left" ? "왼손" : "오른손") + " 사진";
+    img.src = dataUrl;
+    slot.insertBefore(img, slot.firstChild);
+    if(!slot.querySelector(".slot__redo")){
+      var redo = document.createElement("span");
+      redo.className = "slot__redo";
+      redo.textContent = "다시 찍기";
+      slot.appendChild(redo);
+    }
+    slot.classList.add("filled");
+    refreshCTA();
+  }
+
+  function refreshCTA(){
+    var ready = !!(state.left && state.right);
+    $("#analyze").disabled = !ready;
+    $("#analyze-note").textContent = ready
+      ? "두 손 모두 준비되었습니다"
+      : "두 손 사진이 모두 준비되면 활성화됩니다";
+  }
+
+  /* ───────── camera ───────── */
+  var cam = {
+    hand:"left",
+    facing:"environment",
+    stream:null,
+    open:false
+  };
+  var sheet = $("#cam"), video = $("#cam-video"), camMsg = $("#cam-msg");
+
+  function camNote(text){
+    if(text){ camMsg.textContent = text; camMsg.hidden = false; }
+    else { camMsg.hidden = true; camMsg.textContent = ""; }
+  }
+
+  function stopStream(){
+    if(cam.stream){
+      cam.stream.getTracks().forEach(function(t){ t.stop(); });
+      cam.stream = null;
+    }
+    video.srcObject = null;
+  }
+
+  function startStream(){
+    camNote("카메라를 준비하는 중입니다");
+    $("#cam-shot").disabled = true;
+    if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+      camNote("이 브라우저에서는 카메라를 열 수 없습니다. 아래 ‘앨범에서’를 눌러 사진을 선택해 주세요.");
+      return Promise.resolve(false);
+    }
+    return navigator.mediaDevices.getUserMedia({
+      video: { facingMode:{ ideal: cam.facing }, width:{ ideal:1920 }, height:{ ideal:1440 } },
+      audio: false
+    }).then(function(stream){
+      cam.stream = stream;
+      video.srcObject = stream;
+      video.classList.toggle("mirror", cam.facing === "user");
+      $("#cam-guide").style.transform = cam.facing === "user" ? "scaleX(-1)" : "";
+      return video.play().catch(function(){});
+    }).then(function(){
+      camNote(cam.hand === "left" ? "왼손 손바닥을 가이드에 맞춰주세요" : "오른손 손바닥을 가이드에 맞춰주세요");
+      $("#cam-shot").disabled = false;
+      setTimeout(function(){ if(cam.open) camNote(""); }, 2600);
+      return true;
+    }).catch(function(err){
+      var name = err && err.name;
+      if(name === "NotAllowedError" || name === "SecurityError"){
+        camNote("카메라 접근이 허용되지 않았습니다. 브라우저 주소창의 권한 설정에서 카메라를 허용하거나, 아래 ‘앨범에서’로 사진을 선택해 주세요.");
+      } else if(name === "NotFoundError" || name === "OverconstrainedError"){
+        camNote("사용할 수 있는 카메라를 찾지 못했습니다. 아래 ‘앨범에서’로 사진을 선택해 주세요.");
+      } else if(name === "NotReadableError"){
+        camNote("다른 앱이 카메라를 쓰고 있습니다. 그 앱을 닫고 다시 시도해 주세요.");
+      } else {
+        camNote("카메라를 열지 못했습니다. 아래 ‘앨범에서’로 사진을 선택해 주세요.");
+      }
+      return false;
+    });
+  }
+
+  function openCam(hand){
+    cam.hand = hand;
+    cam.open = true;
+    $("#cam-title").textContent = hand === "left" ? "왼손" : "오른손";
+    $("#cam-guide").style.transform = "";
+    sheet.hidden = false;
+    document.body.style.overflow = "hidden";
+    startStream();
+  }
+  function closeCam(){
+    cam.open = false;
+    stopStream();
+    sheet.hidden = true;
+    camNote("");
+    document.body.style.overflow = "";
+  }
+
+  $$(".slot").forEach(function(s){
+    s.addEventListener("click", function(){ openCam(s.dataset.hand); });
+  });
+  $("#cam-close").addEventListener("click", closeCam);
+  document.addEventListener("keydown", function(e){
+    if(e.key === "Escape" && cam.open) closeCam();
+  });
+
+  $("#cam-flip").addEventListener("click", function(){
+    cam.facing = cam.facing === "environment" ? "user" : "environment";
+    stopStream();
+    startStream();
+  });
+
+  $("#cam-shot").addEventListener("click", function(){
+    if(!cam.stream || !video.videoWidth) return;
+    var url = canvasToDataUrl(video, video.videoWidth, video.videoHeight);
+    var hand = cam.hand;
+    closeCam();
+    setShot(hand, url);
+  });
+
+  $("#cam-album").addEventListener("click", function(){
+    $("#file-" + cam.hand).click();
+  });
+
+  ["left","right"].forEach(function(hand){
+    $("#file-" + hand).addEventListener("change", function(e){
+      var file = e.target.files && e.target.files[0];
+      e.target.value = "";
+      if(!file) return;
+      fileToDataUrl(file).then(function(url){
+        if(cam.open) closeCam();
+        setShot(hand, url);
+      }).catch(function(){
+        camNote("이 사진을 읽지 못했습니다. 다른 사진을 선택해 주세요.");
+      });
+    });
+  });
+
+  /* ───────── analysis ───────── */
+  var PHASES = [
+    ["손의 모양을 살피는 중", "손바닥과 손가락의 비율을 봅니다"],
+    ["네 개의 주선을 따라가는 중", "생명선 · 두뇌선 · 감정선 · 운명선"],
+    ["보조선과 언덕을 짚는 중", "태양선 · 결혼선 · 일곱 구"],
+    ["양손을 나란히 두는 중", "타고난 결과 지금의 결을 대조합니다"],
+    ["문장으로 옮기는 중", "거의 다 왔습니다"]
+  ];
+  var phaseTimer = null;
+
+  function runPhases(){
+    var i = 0, el = $("#phase"), sub = $("#phase-sub");
+    el.textContent = PHASES[0][0]; sub.textContent = PHASES[0][1];
+    el.style.opacity = "1"; sub.style.opacity = "1";
+    phaseTimer = setInterval(function(){
+      i = Math.min(i + 1, PHASES.length - 1);
+      el.style.opacity = "0"; sub.style.opacity = "0";
+      setTimeout(function(){
+        el.textContent = PHASES[i][0]; sub.textContent = PHASES[i][1];
+        el.style.opacity = "1"; sub.style.opacity = "1";
+      }, 380);
+    }, 9000);
+  }
+  function stopPhases(){ if(phaseTimer){ clearInterval(phaseTimer); phaseTimer = null; } }
+
+  $("#analyze").addEventListener("click", analyze);
+  $("#stop").addEventListener("click", function(){ if(state.ctl) state.ctl.abort(); });
+
+  function analyze(){
+    if(!state.left || !state.right) return;
+    go("reading");
+    $("#result").hidden = true;
+    $("#result").innerHTML = "";
+    $("#loader").hidden = false;
+    runPhases();
+
+    state.ctl = new AbortController();
+
+    fetch("/api/read", {
+      method:"POST",
+      headers:{ "content-type":"application/json" },
+      body: JSON.stringify({
+        left: state.left,
+        right: state.right,
+        dominantHand: state.dominantHand,
+        birthYear: state.birthYear,
+        focus: state.focus
+      }),
+      signal: state.ctl.signal
+    }).then(function(r){
+      return r.json().catch(function(){ return {}; }).then(function(body){
+        return { status:r.status, ok:r.ok, body:body };
+      });
+    }).then(function(res){
+      stopPhases();
+      state.ctl = null;
+      $("#loader").hidden = true;
+      if(res.ok && res.body && res.body.data) renderResult(res.body.data);
+      else renderError(res.body && res.body.error, res.body && res.body.message);
+    }).catch(function(err){
+      stopPhases();
+      var aborted = err && err.name === "AbortError";
+      state.ctl = null;
+      if(aborted){ stack.pop(); go(stack[stack.length-1] || "capture", false); return; }
+      $("#loader").hidden = true;
+      renderError("network");
+    });
+  }
+
+  /* ───────── render ───────── */
+  var ACCENT = { life:"var(--clay)", head:"var(--olive)", heart:"var(--gold)", fate:"var(--blue)" };
+  var ROMAN  = { life:"Ⅰ", head:"Ⅱ", heart:"Ⅲ", fate:"Ⅳ" };
+
+  function esc(s){
+    return String(s == null ? "" : s)
+      .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+  }
+  function arr(v){ return Array.isArray(v) ? v : []; }
+
+  function renderResult(d){
+    d = d || {};
+    var out = [];
+    var q = d.photoQuality || {};
+
+    out.push('<div style="padding-top:38px">');
+    out.push('<p class="eyebrow">Your Reading</p>');
+    out.push('<p class="hero-word" style="margin-top:16px">' + esc(d.headline || "당신의 손") + '</p>');
+    if(arr(d.keywords).length){
+      out.push('<div class="kw" style="margin-top:20px">' +
+        arr(d.keywords).slice(0,6).map(function(k){ return "<span>" + esc(k) + "</span>"; }).join("") + "</div>");
+    }
+    out.push("</div>");
+
+    if(state.left && state.right){
+      out.push('<div class="shots mt-32">' +
+        '<img src="' + state.left + '" alt="왼손 사진">' +
+        '<img src="' + state.right + '" alt="오른손 사진"></div>');
+    }
+
+    if(q.note){
+      out.push('<div class="notice mt-32"><span style="color:var(--gold);letter-spacing:.2em;font-family:var(--f-lat);font-size:10.5px;text-transform:uppercase;display:block;margin-bottom:5px">Photo</span>' + esc(q.note) + "</div>");
+    }
+
+    if(d.handShape && (d.handShape.type || d.handShape.summary)){
+      out.push('<div class="card mt-32">');
+      out.push('<div class="sec-head"><span class="num">A</span><h3>손의 모양 · ' + esc(d.handShape.type || "") + "</h3></div>");
+      out.push('<p style="margin-top:12px;font-size:14px;line-height:1.78;color:var(--ink-2)">' + esc(d.handShape.summary || "") + "</p></div>");
+    }
+
+    if(d.overview){
+      out.push('<div class="mt-40"><p class="kicker">Overview</p>');
+      out.push('<p style="margin-top:14px;font-size:14.5px;line-height:1.86;color:var(--ink-2)">' + esc(d.overview) + "</p></div>");
+    }
+
+    var lines = arr(d.lines);
+    if(lines.length){
+      out.push('<div class="mt-48"><p class="kicker" style="margin-bottom:16px">네 개의 주선</p><div class="stack gap-16">');
+      lines.forEach(function(l){
+        out.push('<div class="card line-card" style="--accent:' + (ACCENT[l.id] || "var(--gold)") + '">');
+        out.push('<div class="sec-head"><span class="num">' + (ROMAN[l.id] || "·") + '</span><h3>' + esc(l.name || "") + "</h3></div>");
+        out.push('<div class="swatch" style="margin-top:12px"></div>');
+        out.push('<div class="stack gap-16" style="margin-top:16px">');
+        if(l.observed)  out.push('<div class="field-row"><span class="k">관찰</span><span class="v">' + esc(l.observed) + "</span></div>");
+        if(l.tradition) out.push('<div class="field-row"><span class="k">전통적 상징</span><span class="v">' + esc(l.tradition) + "</span></div>");
+        if(l.reading)   out.push('<div class="field-row"><span class="k">해석</span><span class="v strong">' + esc(l.reading) + "</span></div>");
+        out.push("</div></div>");
+      });
+      out.push("</div></div>");
+    }
+
+    var minor = arr(d.minorLines);
+    if(minor.length){
+      out.push('<div class="mt-48"><p class="kicker" style="margin-bottom:16px">보조선</p><div class="card">');
+      minor.forEach(function(m){
+        out.push('<div class="mini"><div class="mini__t"><b>' + esc(m.name || "") + "</b></div>");
+        if(m.observed) out.push("<p>" + esc(m.observed) + "</p>");
+        if(m.reading)  out.push('<p style="color:var(--ink)">' + esc(m.reading) + "</p>");
+        out.push("</div>");
+      });
+      out.push("</div></div>");
+    }
+
+    var mounts = arr(d.mounts);
+    if(mounts.length){
+      out.push('<div class="mt-48"><p class="kicker" style="margin-bottom:16px">손의 언덕</p><div class="card">');
+      mounts.forEach(function(m){
+        out.push('<div class="mini"><div class="mini__t"><b>' + esc(m.name || "") + "</b>" +
+          (m.state ? "<em>" + esc(m.state) + "</em>" : "") + "</div>");
+        if(m.reading) out.push("<p>" + esc(m.reading) + "</p>");
+        out.push("</div>");
+      });
+      out.push("</div></div>");
+    }
+
+    var h = d.hands || {};
+    if(h.left || h.right || h.insight){
+      out.push('<div class="mt-48"><p class="kicker" style="margin-bottom:16px">양손 비교</p><div class="two">');
+      if(h.left)  out.push('<div class="card"><p class="eyebrow">Left · 왼손</p><p style="margin-top:11px;font-size:14px;line-height:1.78;color:var(--ink-2)">' + esc(h.left) + "</p></div>");
+      if(h.right) out.push('<div class="card"><p class="eyebrow">Right · 오른손</p><p style="margin-top:11px;font-size:14px;line-height:1.78;color:var(--ink-2)">' + esc(h.right) + "</p></div>");
+      out.push("</div>");
+      if(h.insight) out.push('<div class="card card--flat" style="margin-top:14px"><p style="font-size:14px;line-height:1.82">' + esc(h.insight) + "</p></div>");
+      out.push("</div>");
+    }
+
+    var adv = arr(d.advice);
+    if(adv.length){
+      out.push('<div class="mt-48"><p class="kicker" style="margin-bottom:16px">오늘의 결</p><div class="stack gap-12">');
+      adv.forEach(function(a, i){
+        out.push('<div class="card"><div class="sec-head"><span class="num">' + ("0" + (i+1)) + '</span><h3>' + esc(a.title || "") + "</h3></div>");
+        out.push('<p style="margin-top:11px;font-size:14px;line-height:1.78;color:var(--ink-2)">' + esc(a.body || "") + "</p></div>");
+      });
+      out.push("</div></div>");
+    }
+
+    if(d.question){
+      out.push('<div class="figure mt-48" style="text-align:center;padding:34px 28px">');
+      out.push('<p class="eyebrow">One Question</p>');
+      out.push('<p class="quote" style="margin-top:16px">' + esc(d.question) + "</p></div>");
+    }
+
+    out.push('<div class="stack gap-12 mt-48">');
+    out.push('<button class="btn btn--ghost" id="r-again" type="button">다시 해석하기</button>');
+    out.push('<button class="btn btn--ghost" id="r-shots" type="button">사진 다시 찍기</button>');
+    out.push('<button class="btn btn--ghost" id="r-guide" type="button">손금 사전 보기</button>');
+    out.push('<button class="btn btn--quiet" id="r-home" type="button">처음으로</button>');
+    out.push("</div>");
+
+    out.push('<div class="notice mt-32">이 해석은 전통 수상학의 상징 체계를 따른 읽기입니다. 수명·건강·관계의 결과를 예측하지 않으며, 판단이 필요한 일은 사람과 자료에 기대세요.</div>');
+
+    var box = $("#result");
+    box.innerHTML = out.join("");
+    box.hidden = false;
+    window.scrollTo(0,0);
+
+    $("#r-again").addEventListener("click", analyze);
+    $("#r-shots").addEventListener("click", function(){ stack.pop(); go("capture", false); });
+    $("#r-guide").addEventListener("click", function(){ go("guide"); });
+    $("#r-home").addEventListener("click", function(){ stack = ["intro"]; go("intro", false); });
+  }
+
+  function renderError(code, serverMessage){
+    var map = {
+      missing_key:      ["서버 설정이 필요합니다", "Vercel 프로젝트에 OPENAI_API_KEY 환경 변수를 추가한 뒤 다시 배포해 주세요."],
+      bad_key:          ["API 키가 유효하지 않습니다", "서버의 OPENAI_API_KEY 값을 확인해 주세요."],
+      rate_limited:     ["잠시 뒤에 다시 시도해 주세요", "요청이 몰렸습니다. 몇 분 뒤 같은 사진으로 다시 눌러주세요."],
+      image_rejected:   ["사진을 읽지 못했습니다", "손바닥이 또렷하게 나오도록 밝은 곳에서 다시 촬영해 주세요."],
+      image_too_large:  ["사진 용량이 너무 큽니다", "다시 촬영하면 알맞은 크기로 줄여 보냅니다."],
+      bad_image:        ["두 손 사진이 모두 필요합니다", "왼손과 오른손을 각각 촬영해 주세요."],
+      invalid_json:     ["해석을 정리하지 못했습니다", "결과를 옮기는 과정에서 문제가 있었습니다. 다시 시도해 주세요."],
+      empty_completion: ["해석이 비어 있습니다", "사진을 다시 찍어 올려주세요."],
+      upstream_error:   ["해석을 마치지 못했습니다", "해석 서버가 응답하지 않았습니다. 다시 시도해 주세요."],
+      upstream_unreachable: ["해석 서버에 닿지 못했습니다", "네트워크 상태를 확인하고 다시 시도해 주세요."],
+      network:          ["연결이 끊겼습니다", "네트워크 상태를 확인하고 다시 시도해 주세요."]
+    };
+    var m = map[code] || ["해석을 마치지 못했습니다", serverMessage || "다시 시도해 주세요."];
+
+    var box = $("#result");
+    box.innerHTML =
+      '<div style="padding-top:64px;text-align:center">' +
+        '<p class="eyebrow">Interrupted</p>' +
+        '<p class="hero-word" style="margin-top:16px">' + esc(m[0]) + "</p>" +
+        '<p class="lede" style="max-width:300px;margin:14px auto 0">' + esc(m[1]) + "</p>" +
+      "</div>" +
+      '<div class="stack gap-12 mt-40">' +
+        '<button class="btn" id="e-again" type="button">다시 시도</button>' +
+        '<button class="btn btn--ghost" id="e-shots" type="button">사진 다시 찍기</button>' +
+        '<button class="btn btn--ghost" id="e-guide" type="button">손금 사전 보기</button>' +
+      "</div>";
+    box.hidden = false;
+    window.scrollTo(0,0);
+    $("#e-again").addEventListener("click", analyze);
+    $("#e-shots").addEventListener("click", function(){ stack.pop(); go("capture", false); });
+    $("#e-guide").addEventListener("click", function(){ go("guide"); });
+  }
+})();
+</script>
+</body>
+</html>

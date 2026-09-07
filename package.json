@@ -1,0 +1,11 @@
+{
+  "name": "sonngeum",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "손금보기 — 두 손바닥 사진으로 읽는 전통 수상학 가이드",
+  "scripts": {
+    "dev": "vercel dev",
+    "deploy": "vercel deploy --prod"
+  }
+}

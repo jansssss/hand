@@ -1,0 +1,12 @@
+.vercel
+.env
+.env.*
+!.env.example
+node_modules
+.DS_Store
+Thumbs.db
+
+# 로컬 도구 상태 / 디자인 원본 (배포 대상 아님)
+.omc/
+refarer1
+refarer2.jpg
