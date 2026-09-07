@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>손금보기</title>
-<meta name="description" content="두 손바닥 사진으로 읽는 전통 수상학 가이드. 네 개의 주선과 보조선, 손의 언덕을 하나씩 짚어 해석합니다.">
+<title>손금보기 · 관상보기</title>
+<meta name="description" content="두 손바닥과 얼굴 사진으로 읽는 전통 상학. 네 주선과 언덕, 삼정과 오관을 하나씩 짚어 해석합니다.">
 <meta name="theme-color" content="#F4EFE6" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#141210" media="(prefers-color-scheme: dark)">
 <meta name="color-scheme" content="light dark">
-<meta property="og:title" content="손금보기">
-<meta property="og:description" content="두 손바닥 사진으로 읽는 전통 수상학 가이드">
+<meta property="og:title" content="손금보기 · 관상보기">
+<meta property="og:description" content="두 손바닥과 얼굴 사진으로 읽는 전통 상학">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A4%B2%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -79,9 +79,10 @@ body{
 .bar__btn[hidden]{display:none}
 .bar__btn:focus-visible{outline:1.5px solid var(--gold);outline-offset:2px}
 
-.view{display:none;padding:0 var(--gutter) 64px;animation:fade .45s ease both}
+.view{display:none;padding:0 var(--gutter) calc(env(safe-area-inset-bottom) + 64px);animation:fade .45s ease both}
 .view.on{display:block}
 @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.view{animation:none}}
 
 .eyebrow{font-family:var(--f-lat);font-size:11px;font-weight:500;letter-spacing:.34em;text-transform:uppercase;color:var(--gold);margin:0}
 .kicker{font-family:var(--f-lat);font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--ink-3);margin:0}
@@ -92,7 +93,7 @@ p{margin:0}
 .lede{color:var(--ink-2);font-size:14.5px;line-height:1.8;margin-top:14px}
 .dim{color:var(--ink-3)}
 .stack{display:flex;flex-direction:column}
-.gap-8{gap:8px}.gap-12{gap:12px}.gap-16{gap:16px}.gap-24{gap:24px}
+.gap-12{gap:12px}.gap-16{gap:16px}.gap-24{gap:24px}
 .mt-32{margin-top:32px}.mt-40{margin-top:40px}.mt-48{margin-top:48px}
 
 .card{background:var(--card);border:1px solid var(--rule);border-radius:var(--radius);padding:22px}
@@ -114,25 +115,28 @@ p{margin:0}
 }
 .btn:focus-visible{outline:1.5px solid var(--gold);outline-offset:3px}
 
-.palm{width:100%;height:auto;display:block}
-.palm .skin{fill:var(--card);stroke:var(--rule-2);stroke-width:1.1}
-.palm .ln{fill:none;stroke-width:1.6;stroke-linecap:round}
-.palm .ln.life{stroke:var(--clay)} .palm .ln.head{stroke:var(--olive)}
-.palm .ln.heart{stroke:var(--gold)} .palm .ln.fate{stroke:var(--blue)}
-.palm .hair{fill:none;stroke:var(--rule-2);stroke-width:.8;opacity:.85}
-
-.figure{background:var(--shade);border-radius:26px;padding:26px 30px 20px}
-.figure__cap{
-  display:flex;justify-content:space-between;align-items:baseline;margin-top:14px;
-  padding-top:12px;border-top:1px solid var(--rule);font-family:var(--f-lat);
-  font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-3);
+/* 모드 선택 */
+.modes{display:flex;flex-direction:column;gap:12px}
+.mode{
+  display:flex;align-items:center;gap:18px;width:100%;text-align:left;
+  padding:20px 22px;border:1px solid var(--rule);border-radius:var(--radius);
+  background:var(--card);color:var(--ink);font-family:var(--f-body);cursor:pointer;
+  transition:transform .18s ease,border-color .2s ease;
 }
-.legend{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:16px}
-.legend span{display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--ink-2)}
-.legend i{width:16px;height:1.6px;border-radius:2px;display:block}
+.mode:active{transform:scale(.99)}
+.mode:hover{border-color:var(--rule-2)}
+.mode:focus-visible{outline:1.5px solid var(--gold);outline-offset:3px}
+.mode__art{width:52px;height:62px;flex:none;color:var(--rule-2)}
+.mode__art .accent{stroke:var(--gold)}
+.mode__body{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.mode__t{font-family:var(--f-disp);font-weight:700;font-size:19px;letter-spacing:-.01em}
+.mode__t em{font-style:normal;font-family:var(--f-lat);font-size:13px;color:var(--gold);margin-left:8px;letter-spacing:.12em}
+.mode__d{font-size:12.5px;line-height:1.6;color:var(--ink-3)}
+.mode__go{flex:none;color:var(--ink-3)}
 
-/* upload slots */
+/* 촬영 슬롯 */
 .slots{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.slots--one{grid-template-columns:1fr;max-width:250px;margin:0 auto}
 .slot{
   position:relative;aspect-ratio:3/4;border-radius:18px;overflow:hidden;
   border:1px dashed var(--rule-2);background:var(--card);display:grid;place-items:center;
@@ -142,7 +146,7 @@ p{margin:0}
 .slot:focus-visible{outline:1.5px solid var(--gold);outline-offset:3px}
 .slot__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .slot__inner{position:relative;text-align:center;padding:14px;pointer-events:none}
-.slot__hand{width:44px;opacity:.45;margin-bottom:8px;color:var(--ink)}
+.slot__art{width:44px;opacity:.45;margin-bottom:8px;color:var(--ink)}
 .slot__label{font-family:var(--f-disp);font-weight:700;font-size:15px;color:var(--ink);display:block}
 .slot__hint{font-size:11.5px;color:var(--ink-3);margin-top:3px;letter-spacing:.02em;display:block}
 .slot__tag{
@@ -156,13 +160,13 @@ p{margin:0}
   background:color-mix(in srgb, var(--paper) 86%, transparent);
   color:var(--ink-2);border:1px solid var(--rule);border-radius:99px;padding:4px 11px;
 }
-.slot input{display:none}
 
 .tips{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:11px}
 .tips li{display:flex;gap:11px;font-size:13.5px;color:var(--ink-2);line-height:1.62}
 .tips b{font-family:var(--f-lat);font-size:12px;letter-spacing:.1em;color:var(--gold);flex:none;padding-top:1px;font-weight:500}
 
 .field{display:flex;flex-direction:column;gap:9px}
+.field[hidden]{display:none}
 .field__label{font-size:12.5px;color:var(--ink-3)}
 .chips{display:flex;gap:8px;flex-wrap:wrap}
 .chip{
@@ -181,6 +185,7 @@ input[type="number"]:focus-visible{outline:1.5px solid var(--gold);outline-offse
   border:1px solid var(--rule);border-radius:16px;padding:14px 16px;
   font-size:12.5px;line-height:1.68;color:var(--ink-3);background:var(--shade);
 }
+.notice[hidden]{display:none}
 
 /* 촬영 / 업로드 선택 */
 .picker{position:fixed;inset:0;z-index:50;display:flex;align-items:flex-end;justify-content:center}
@@ -214,7 +219,7 @@ input[type="number"]:focus-visible{outline:1.5px solid var(--gold);outline-offse
 .picker__opt b{font-family:var(--f-disp);font-weight:700;font-size:15px}
 .picker__opt i{font-style:normal;font-size:11.5px;color:var(--ink-3)}
 
-/* camera sheet */
+/* 카메라 */
 .sheet{position:fixed;inset:0;z-index:60;background:#0E0C0A;display:flex;flex-direction:column;color:#F2EBDD}
 .sheet[hidden]{display:none}
 .sheet__top{
@@ -228,7 +233,10 @@ input[type="number"]:focus-visible{outline:1.5px solid var(--gold);outline-offse
 .cam__stage video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#0E0C0A}
 .cam__stage video.mirror{transform:scaleX(-1)}
 .cam__guide{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:.34}
-.cam__guide path,.cam__guide rect{fill:none;stroke:#F2EBDD;stroke-width:2;stroke-linejoin:round}
+.cam__guide path,.cam__guide rect,.cam__guide ellipse,.cam__guide line{
+  fill:none;stroke:#F2EBDD;stroke-width:2;stroke-linejoin:round;stroke-linecap:round;
+}
+.cam__guide .thin{stroke-width:1.1;stroke-dasharray:5 6}
 .cam__msg{
   position:absolute;left:50%;bottom:22px;transform:translateX(-50%);
   max-width:82%;text-align:center;font-size:13px;line-height:1.6;
@@ -255,17 +263,23 @@ input[type="number"]:focus-visible{outline:1.5px solid var(--gold);outline-offse
 .shutter:disabled{opacity:.4}
 .shutter:focus-visible{outline:1.5px solid #C9A868;outline-offset:4px}
 
-/* loader */
+/* 로딩 */
 .loader{padding:56px 0 0;text-align:center}
-.loader__art{width:150px;margin:0 auto}
-.loader .ln{stroke-dasharray:200;stroke-dashoffset:200;animation:draw 2.6s ease-in-out infinite}
-.loader .ln.head{animation-delay:.32s} .loader .ln.heart{animation-delay:.64s} .loader .ln.fate{animation-delay:.96s}
-@keyframes draw{0%{stroke-dashoffset:200}38%{stroke-dashoffset:0}72%{stroke-dashoffset:0;opacity:1}92%,100%{stroke-dashoffset:0;opacity:0}}
-@media (prefers-reduced-motion:reduce){.loader .ln{animation:none;stroke-dashoffset:0}.view{animation:none}}
+.loader__art{width:150px;margin:0 auto;display:block}
+.loader__art .frame{fill:var(--card);stroke:var(--rule-2);stroke-width:1.1}
+.loader__art .ln{
+  fill:none;stroke-width:1.7;stroke-linecap:round;
+  stroke-dasharray:210;stroke-dashoffset:210;animation:draw 2.6s ease-in-out infinite;
+}
+.loader__art .ln:nth-of-type(2){animation-delay:.32s}
+.loader__art .ln:nth-of-type(3){animation-delay:.64s}
+.loader__art .ln:nth-of-type(4){animation-delay:.96s}
+@keyframes draw{0%{stroke-dashoffset:210}38%{stroke-dashoffset:0}72%{stroke-dashoffset:0;opacity:1}92%,100%{stroke-dashoffset:0;opacity:0}}
+@media (prefers-reduced-motion:reduce){.loader__art .ln{animation:none;stroke-dashoffset:0}}
 .loader__phase{font-family:var(--f-disp);font-size:17px;margin-top:30px;transition:opacity .4s ease}
 .loader__sub{font-size:12.5px;color:var(--ink-3);margin-top:8px;transition:opacity .4s ease}
 
-/* result */
+/* 결과 */
 .hero-word{font-family:var(--f-disp);font-weight:700;font-size:27px;line-height:1.46;letter-spacing:-.02em;text-wrap:balance}
 .kw{display:flex;flex-wrap:wrap;gap:7px}
 .kw span{font-size:12px;color:var(--ink-2);border:1px solid var(--rule-2);border-radius:999px;padding:5px 13px}
@@ -285,10 +299,11 @@ input[type="number"]:focus-visible{outline:1.5px solid var(--gold);outline-offse
 .mini__t em{font-style:normal;font-size:11px;color:var(--gold);border:1px solid var(--rule-2);border-radius:99px;padding:1px 8px}
 .mini p{font-size:13.5px;line-height:1.72;color:var(--ink-2)}
 .quote{font-family:var(--f-disp);font-size:18px;line-height:1.66;text-wrap:balance}
-.shots{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.shots{display:grid;gap:10px}
+.shots--2{grid-template-columns:1fr 1fr}
+.shots--1{grid-template-columns:1fr;max-width:230px}
 .shots img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:14px;border:1px solid var(--rule)}
-
-.view{padding-bottom:calc(env(safe-area-inset-bottom) + 64px)}
+.figure{background:var(--shade);border-radius:26px;padding:26px 30px}
 </style>
 </head>
 <body>
@@ -297,62 +312,49 @@ input[type="number"]:focus-visible{outline:1.5px solid var(--gold);outline-offse
     <button class="bar__btn" id="back" hidden aria-label="뒤로">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
     </button>
-    <span class="bar__mark">손금보기</span>
+    <span class="bar__mark" id="mark">손금 · 관상</span>
   </header>
 
   <!-- ══════════ INTRO ══════════ -->
   <section class="view on" id="v-intro">
     <div style="padding-top:44px">
-      <p class="eyebrow">Palm Reading Journal</p>
-      <h1>손 안의<br>작은 지도</h1>
-      <p class="lede">두 손바닥을 찍어 올리면, 전통 수상학이 오래 읽어온 방식대로 네 개의 주선과 보조선, 손의 언덕을 하나씩 짚어 해석합니다.</p>
+      <p class="eyebrow">Palm &amp; Face Reading</p>
+      <h1>손과 얼굴에<br>남은 결</h1>
+      <p class="lede">전통 상학이 오래 읽어온 방식대로, 손바닥의 네 주선과 언덕을, 얼굴의 삼정과 오관을 하나씩 짚어 해석합니다.</p>
     </div>
 
-    <div class="figure mt-40">
-      <svg class="palm" viewBox="0 0 200 268" role="img" aria-label="손바닥의 주요 네 선 위치">
-        <g class="skin">
-          <rect x="61" y="42" width="21" height="80" rx="10.5"/>
-          <rect x="86" y="30" width="22" height="92" rx="11"/>
-          <rect x="112" y="38" width="21" height="84" rx="10.5"/>
-          <rect x="137" y="58" width="19" height="66" rx="9.5"/>
+    <div class="modes mt-40">
+      <button class="mode" type="button" data-mode="palm">
+        <svg class="mode__art" viewBox="0 0 200 268" fill="none" stroke="currentColor" stroke-width="7" stroke-linejoin="round" aria-hidden="true">
+          <rect x="61" y="42" width="21" height="80" rx="10.5"/><rect x="86" y="30" width="22" height="92" rx="11"/>
+          <rect x="112" y="38" width="21" height="84" rx="10.5"/><rect x="137" y="58" width="19" height="66" rx="9.5"/>
           <rect x="52" y="100" width="106" height="126" rx="36"/>
           <rect x="18" y="132" width="20" height="62" rx="10" transform="rotate(-32 28 163)"/>
-        </g>
-        <g class="hair">
-          <path d="M64 72h15M89 62h16M115 68h15M139 86h14"/>
-          <path d="M64 92h15M89 84h16M115 90h15M139 104h14"/>
-          <path d="M66 216h78"/>
-        </g>
-        <g>
-          <path class="ln life" d="M76 118 Q62 148 66 178 Q69 199 82 210"/>
-          <path class="ln head" d="M74 138 Q106 150 140 164"/>
-          <path class="ln heart" d="M150 128 Q118 112 80 124"/>
-          <path class="ln fate" d="M106 208 Q110 168 104 134"/>
-        </g>
-        <g fill="var(--paper)" stroke="var(--rule-2)" stroke-width=".9">
-          <circle cx="64" cy="164" r="9"/><circle cx="112" cy="152" r="9"/>
-          <circle cx="116" cy="118" r="9"/><circle cx="106" cy="190" r="9"/>
-        </g>
-        <g fill="var(--ink-2)" font-family="Cormorant Garamond, serif" font-size="10" text-anchor="middle">
-          <text x="64" y="167.5">01</text><text x="112" y="155.5">02</text>
-          <text x="116" y="121.5">03</text><text x="106" y="193.5">04</text>
-        </g>
-      </svg>
-      <div class="legend">
-        <span><i style="background:var(--clay)"></i>01 생명선</span>
-        <span><i style="background:var(--olive)"></i>02 두뇌선</span>
-        <span><i style="background:var(--gold)"></i>03 감정선</span>
-        <span><i style="background:var(--blue)"></i>04 운명선</span>
-      </div>
-      <div class="figure__cap"><span>The Four Lines</span><span>手相</span></div>
-    </div>
+          <path class="accent" d="M74 138 Q106 150 140 164" stroke-width="6" stroke-linecap="round"/>
+        </svg>
+        <span class="mode__body">
+          <span class="mode__t">손금보기<em>手相</em></span>
+          <span class="mode__d">두 손바닥의 네 주선과 보조선, 일곱 언덕을 읽습니다</span>
+        </span>
+        <svg class="mode__go" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+      </button>
 
-    <div class="stack gap-12 mt-40">
-      <button class="btn" id="go-capture">두 손 사진으로 시작하기</button>
+      <button class="mode" type="button" data-mode="face">
+        <svg class="mode__art" viewBox="0 0 200 268" fill="none" stroke="currentColor" stroke-width="7" stroke-linejoin="round" aria-hidden="true">
+          <path d="M100 26c34 0 58 25 58 62 0 14-2 30-6 45-7 27-25 52-38 62a22 22 0 01-28 0c-13-10-31-35-38-62-4-15-6-31-6-45 0-37 24-62 58-62z"/>
+          <path d="M68 118c7-5 18-5 25 0M107 118c7-5 18-5 25 0"/>
+          <path class="accent" d="M56 96h88M56 158h88" stroke-width="5" stroke-linecap="round" stroke-dasharray="10 12"/>
+        </svg>
+        <span class="mode__body">
+          <span class="mode__t">관상보기<em>觀相</em></span>
+          <span class="mode__d">얼굴의 오행 형과 삼정, 오관과 십이궁을 읽습니다</span>
+        </span>
+        <svg class="mode__go" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+      </button>
     </div>
 
     <div class="notice mt-32">
-      손금은 과학적으로 검증된 성격·미래 예측법이 아닙니다. 이곳의 해석은 동서양 상학이 축적해 온 상징 체계를 오늘의 나를 돌아보는 언어로 옮긴 것입니다.
+      손금과 관상은 과학적으로 검증된 성격·미래 예측법이 아닙니다. 이곳의 해석은 동양 상학이 축적해 온 상징 체계를 오늘의 나를 돌아보는 언어로 옮긴 것입니다.
     </div>
   </section>
 
@@ -360,58 +362,27 @@ input[type="number"]:focus-visible{outline:1.5px solid var(--gold);outline-offse
   <section class="view" id="v-capture">
     <div style="padding-top:34px">
       <p class="kicker">Step 01</p>
-      <h2 style="margin-top:10px;font-size:24px">두 손바닥을 담아주세요</h2>
+      <h2 id="cap-step" style="margin-top:10px;font-size:24px">두 손바닥을 담아주세요</h2>
     </div>
 
-    <div class="slots mt-32">
-      <button class="slot" id="slot-left" type="button" data-hand="left">
-        <span class="slot__tag">Left</span>
-        <span class="slot__inner">
-          <svg class="slot__hand" viewBox="0 0 200 268" fill="none" stroke="currentColor" stroke-width="7" stroke-linejoin="round" aria-hidden="true">
-            <rect x="61" y="42" width="21" height="80" rx="10.5"/><rect x="86" y="30" width="22" height="92" rx="11"/>
-            <rect x="112" y="38" width="21" height="84" rx="10.5"/><rect x="137" y="58" width="19" height="66" rx="9.5"/>
-            <rect x="52" y="100" width="106" height="126" rx="36"/>
-            <rect x="18" y="132" width="20" height="62" rx="10" transform="rotate(-32 28 163)"/>
-          </svg>
-          <span class="slot__label">왼손</span>
-          <span class="slot__hint">촬영 · 업로드</span>
-        </span>
-      </button>
+    <div class="mt-32" id="slots"></div>
+    <div id="files"></div>
 
-      <button class="slot" id="slot-right" type="button" data-hand="right">
-        <span class="slot__tag">Right</span>
-        <span class="slot__inner">
-          <svg class="slot__hand" viewBox="0 0 200 268" fill="none" stroke="currentColor" stroke-width="7" stroke-linejoin="round" style="transform:scaleX(-1)" aria-hidden="true">
-            <rect x="61" y="42" width="21" height="80" rx="10.5"/><rect x="86" y="30" width="22" height="92" rx="11"/>
-            <rect x="112" y="38" width="21" height="84" rx="10.5"/><rect x="137" y="58" width="19" height="66" rx="9.5"/>
-            <rect x="52" y="100" width="106" height="126" rx="36"/>
-            <rect x="18" y="132" width="20" height="62" rx="10" transform="rotate(-32 28 163)"/>
-          </svg>
-          <span class="slot__label">오른손</span>
-          <span class="slot__hint">촬영 · 업로드</span>
-        </span>
-      </button>
+    <div class="notice mt-32" id="privacy" hidden>
+      본인 얼굴 사진만 올려주세요. 사진은 해석에만 쓰이고 서버에 저장하지 않습니다.
     </div>
-    <input type="file" id="file-left" accept="image/*" hidden>
-    <input type="file" id="file-right" accept="image/*" hidden>
-
 
     <div class="card mt-32">
       <p class="eyebrow">Shooting Notes</p>
-      <ul class="tips" style="margin-top:16px">
-        <li><b>01</b><span>창가의 자연광 아래에서, 플래시 없이 찍으면 선의 깊이가 가장 잘 남습니다.</span></li>
-        <li><b>02</b><span>손을 억지로 펴거나 오므리지 말고 자연스럽게 편 상태로 두세요.</span></li>
-        <li><b>03</b><span>손바닥 정면에서 수직으로, 손목 주름까지 프레임에 넣어주세요.</span></li>
-        <li><b>04</b><span>손 그림자가 손바닥 위로 지지 않는 각도를 찾으면 잔선까지 읽힙니다.</span></li>
-      </ul>
+      <ul class="tips" id="tips" style="margin-top:16px"></ul>
     </div>
 
     <div class="card mt-32 stack gap-24">
       <div>
         <p class="eyebrow">Optional</p>
-        <p class="dim" style="font-size:13px;margin-top:8px">비워두어도 해석은 진행됩니다. 적어주시면 양손 대조가 더 정확해집니다.</p>
+        <p class="dim" style="font-size:13px;margin-top:8px">비워두어도 해석은 진행됩니다.</p>
       </div>
-      <div class="field">
+      <div class="field" id="dom-field">
         <span class="field__label">주로 쓰는 손</span>
         <div class="chips" id="dom">
           <button class="chip" type="button" aria-pressed="false" data-v="오른손">오른손</button>
@@ -435,42 +406,28 @@ input[type="number"]:focus-visible{outline:1.5px solid var(--gold);outline-offse
     </div>
 
     <div class="stack gap-12 mt-32">
-      <button class="btn" id="analyze" disabled>손금 해석 시작</button>
-      <p class="dim" id="analyze-note" style="font-size:12px;text-align:center">두 손 사진이 모두 준비되면 활성화됩니다</p>
+      <button class="btn" id="analyze" disabled>해석 시작</button>
+      <p class="dim" id="analyze-note" style="font-size:12px;text-align:center"></p>
     </div>
   </section>
 
   <!-- ══════════ READING ══════════ -->
   <section class="view" id="v-reading">
     <div class="loader" id="loader">
-      <svg class="palm loader__art" viewBox="0 0 200 268" aria-hidden="true">
-        <g class="skin">
-          <rect x="61" y="42" width="21" height="80" rx="10.5"/><rect x="86" y="30" width="22" height="92" rx="11"/>
-          <rect x="112" y="38" width="21" height="84" rx="10.5"/><rect x="137" y="58" width="19" height="66" rx="9.5"/>
-          <rect x="52" y="100" width="106" height="126" rx="36"/>
-          <rect x="18" y="132" width="20" height="62" rx="10" transform="rotate(-32 28 163)"/>
-        </g>
-        <g>
-          <path class="ln life" d="M76 118 Q62 148 66 178 Q69 199 82 210"/>
-          <path class="ln head" d="M74 138 Q106 150 140 164"/>
-          <path class="ln heart" d="M150 128 Q118 112 80 124"/>
-          <path class="ln fate" d="M106 208 Q110 168 104 134"/>
-        </g>
-      </svg>
-      <p class="loader__phase" id="phase">손의 모양을 살피는 중</p>
+      <div id="loader-art"></div>
+      <p class="loader__phase" id="phase"></p>
       <p class="loader__sub" id="phase-sub">30초에서 1분 정도 걸립니다</p>
       <div style="margin-top:34px"><button class="btn btn--quiet" id="stop">중단하기</button></div>
     </div>
     <div id="result" hidden></div>
   </section>
-
 </div>
 
 <!-- ══════════ 촬영 / 업로드 선택 ══════════ -->
 <div class="picker" id="picker" hidden>
   <div class="picker__scrim" id="picker-scrim"></div>
   <div class="picker__panel" role="dialog" aria-modal="true" aria-labelledby="picker-title">
-    <p class="picker__title" id="picker-title">왼손 사진</p>
+    <p class="picker__title" id="picker-title">사진</p>
     <button class="picker__opt" id="pick-camera" type="button">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M3 8.5A1.5 1.5 0 014.5 7h2.2a1 1 0 00.83-.45l.94-1.4A1 1 0 019.3 4.7h5.4a1 1 0 01.83.45l.94 1.4a1 1 0 00.83.45h2.2A1.5 1.5 0 0121 8.5v9a1.5 1.5 0 01-1.5 1.5h-15A1.5 1.5 0 013 17.5z"/>
@@ -491,24 +448,17 @@ input[type="number"]:focus-visible{outline:1.5px solid var(--gold);outline-offse
   </div>
 </div>
 
-<!-- ══════════ CAMERA SHEET ══════════ -->
-<div class="sheet" id="cam" hidden role="dialog" aria-modal="true" aria-label="손바닥 촬영">
+<!-- ══════════ 카메라 ══════════ -->
+<div class="sheet" id="cam" hidden role="dialog" aria-modal="true" aria-label="사진 촬영">
   <div class="sheet__top">
-    <span class="sheet__title" id="cam-title">왼손</span>
+    <span class="sheet__title" id="cam-title">촬영</span>
     <button class="sheet__x" id="cam-close" aria-label="닫기">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
     </button>
   </div>
   <div class="cam__stage">
     <video id="cam-video" playsinline muted autoplay></video>
-    <svg class="cam__guide" id="cam-guide" viewBox="0 0 200 268" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-      <g>
-        <rect x="61" y="42" width="21" height="80" rx="10.5"/><rect x="86" y="30" width="22" height="92" rx="11"/>
-        <rect x="112" y="38" width="21" height="84" rx="10.5"/><rect x="137" y="58" width="19" height="66" rx="9.5"/>
-        <rect x="52" y="100" width="106" height="126" rx="36"/>
-        <rect x="18" y="132" width="20" height="62" rx="10" transform="rotate(-32 28 163)"/>
-      </g>
-    </svg>
+    <div class="cam__guide" id="cam-guide" aria-hidden="true"></div>
     <p class="cam__msg" id="cam-msg" hidden></p>
   </div>
   <div class="sheet__bottom">
@@ -525,14 +475,131 @@ input[type="number"]:focus-visible{outline:1.5px solid var(--gold);outline-offse
   var $  = function(s){ return document.querySelector(s); };
   var $$ = function(s){ return Array.prototype.slice.call(document.querySelectorAll(s)); };
 
+  /* ───────── 그림 조각 ───────── */
+  var HAND_BODY =
+    '<rect x="61" y="42" width="21" height="80" rx="10.5"/><rect x="86" y="30" width="22" height="92" rx="11"/>' +
+    '<rect x="112" y="38" width="21" height="84" rx="10.5"/><rect x="137" y="58" width="19" height="66" rx="9.5"/>' +
+    '<rect x="52" y="100" width="106" height="126" rx="36"/>' +
+    '<rect x="18" y="132" width="20" height="62" rx="10" transform="rotate(-32 28 163)"/>';
+
+  var FACE_BODY =
+    '<path d="M100 26c34 0 58 25 58 62 0 14-2 30-6 45-7 27-25 52-38 62a22 22 0 01-28 0c-13-10-31-35-38-62-4-15-6-31-6-45 0-37 24-62 58-62z"/>' +
+    '<path d="M68 118c7-5 18-5 25 0M107 118c7-5 18-5 25 0"/><path d="M100 130v22c0 5 4 8 9 8"/>' +
+    '<path d="M84 186c10 6 22 6 32 0"/>';
+
+  function slotArt(kind, flip){
+    return '<svg class="slot__art" viewBox="0 0 200 268" fill="none" stroke="currentColor" ' +
+      'stroke-width="7" stroke-linejoin="round" stroke-linecap="round"' +
+      (flip ? ' style="transform:scaleX(-1)"' : "") + ' aria-hidden="true">' +
+      (kind === "face" ? FACE_BODY : HAND_BODY) + "</svg>";
+  }
+
+  var HAND_GUIDE =
+    '<svg viewBox="0 0 200 268" preserveAspectRatio="xMidYMid meet" style="width:100%;height:100%">' +
+    '<g>' + HAND_BODY + "</g></svg>";
+
+  // 얼굴 가이드는 윤곽에 삼정을 나누는 선을 겹쳐 프레이밍을 돕는다.
+  var FACE_GUIDE =
+    '<svg viewBox="0 0 200 268" preserveAspectRatio="xMidYMid meet" style="width:100%;height:100%">' +
+    '<ellipse cx="100" cy="134" rx="62" ry="86"/>' +
+    '<line class="thin" x1="45" y1="98" x2="155" y2="98"/>' +
+    '<line class="thin" x1="42" y1="160" x2="158" y2="160"/>' +
+    '<line class="thin" x1="100" y1="52" x2="100" y2="216"/>' +
+    "</svg>";
+
+  function loaderArt(kind){
+    var lines = kind === "face"
+      ? '<path class="ln" style="stroke:var(--clay)"  d="M52 92 H148"/>' +
+        '<path class="ln" style="stroke:var(--olive)" d="M48 134 H152"/>' +
+        '<path class="ln" style="stroke:var(--gold)"  d="M54 176 H146"/>' +
+        '<path class="ln" style="stroke:var(--blue)"  d="M100 60 V208"/>'
+      : '<path class="ln" style="stroke:var(--clay)"  d="M76 118 Q62 148 66 178 Q69 199 82 210"/>' +
+        '<path class="ln" style="stroke:var(--olive)" d="M74 138 Q106 150 140 164"/>' +
+        '<path class="ln" style="stroke:var(--gold)"  d="M150 128 Q118 112 80 124"/>' +
+        '<path class="ln" style="stroke:var(--blue)"  d="M106 208 Q110 168 104 134"/>';
+    return '<svg class="loader__art" viewBox="0 0 200 268" aria-hidden="true">' +
+      '<g class="frame" fill="none">' + (kind === "face" ? FACE_BODY : HAND_BODY) + "</g>" +
+      lines + "</svg>";
+  }
+
+  /* ───────── 모드 ───────── */
+  var MODES = {
+    palm: {
+      name: "손금보기",
+      step: "두 손바닥을 담아주세요",
+      art: "hand",
+      facing: "environment",
+      askDominant: true,
+      slots: [
+        { id:"left",  label:"왼손",   tag:"Left",  flip:false },
+        { id:"right", label:"오른손", tag:"Right", flip:true  }
+      ],
+      tips: [
+        "창가의 자연광 아래에서, 플래시 없이 찍으면 선의 깊이가 가장 잘 남습니다.",
+        "손을 억지로 펴거나 오므리지 말고 자연스럽게 편 상태로 두세요.",
+        "손바닥 정면에서 수직으로, 손목 주름까지 프레임에 넣어주세요.",
+        "손 그림자가 손바닥 위로 지지 않는 각도를 찾으면 잔선까지 읽힙니다."
+      ],
+      phases: [
+        ["손의 모양을 살피는 중", "손바닥과 손가락의 비율을 봅니다"],
+        ["네 개의 주선을 따라가는 중", "생명선 · 두뇌선 · 감정선 · 운명선"],
+        ["보조선과 언덕을 짚는 중", "태양선 · 결혼선 · 일곱 구"],
+        ["양손을 나란히 두는 중", "타고난 결과 지금의 결을 대조합니다"],
+        ["문장으로 옮기는 중", "거의 다 왔습니다"]
+      ],
+      labels: {
+        shape: "손의 모양",
+        primary: "네 개의 주선",
+        secondary: "보조선",
+        regions: "손의 언덕",
+        compare: "양손 비교",
+        a: "Left · 왼손",
+        b: "Right · 오른손"
+      },
+      closing: "이 해석은 전통 수상학의 상징 체계를 따른 읽기입니다. 수명·건강·관계의 결과를 예측하지 않으며, 판단이 필요한 일은 사람과 자료에 기대세요."
+    },
+    face: {
+      name: "관상보기",
+      step: "얼굴을 담아주세요",
+      art: "face",
+      facing: "user",
+      askDominant: false,
+      slots: [
+        { id:"face", label:"얼굴", tag:"Face", flip:false }
+      ],
+      tips: [
+        "창을 마주 보고 서면 얼굴에 그림자가 지지 않습니다.",
+        "정면을 보고 턱을 당기거나 들지 말고 자연스럽게 두세요.",
+        "이마와 귀가 드러나도록 머리카락과 모자를 걷어주세요.",
+        "안경은 벗는 편이 눈과 눈두덩을 읽기에 좋습니다."
+      ],
+      phases: [
+        ["얼굴의 모양을 살피는 중", "오행 가운데 어느 결에 가까운지 봅니다"],
+        ["삼정을 재는 중", "상정 · 중정 · 하정의 균형"],
+        ["오관을 짚는 중", "눈썹 · 눈 · 코 · 입 · 귀"],
+        ["십이궁을 보는 중", "명궁 · 재백궁 · 관록궁"],
+        ["문장으로 옮기는 중", "거의 다 왔습니다"]
+      ],
+      labels: {
+        shape: "얼굴의 모양",
+        primary: "삼정 三停",
+        secondary: "오관 五官",
+        regions: "십이궁 十二宮",
+        compare: null
+      },
+      closing: "이 해석은 동양 관상학의 상징 체계를 따른 읽기입니다. 외모의 우열이나 지능·능력·건강을 판단하지 않으며, 사람을 얼굴로 가늠하는 근거가 될 수 없습니다."
+    }
+  };
+
   var state = {
-    left:null, right:null,          // 손 사진 data URL
+    mode: "palm",
+    shots: {},                      // slot id → data URL
     dominantHand:"", focus:"", birthYear:"",
-    usage:null,                     // 이번 해석의 사용량
+    usage:null,
     ctl:null
   };
 
-  /* ───────── API 사용량 ───────── */
+  /* ───────── API 사용량 (화면에는 띄우지 않고 콘솔에만) ───────── */
   var USAGE_KEY = "palm.usage.v1";
   var ZERO = { count:0, input:0, cached:0, output:0, cost:0, costed:0 };
 
@@ -543,13 +610,15 @@ input[type="number"]:focus-visible{outline:1.5px solid var(--gold);outline-offse
         count:+v.count || 0, input:+v.input || 0, cached:+v.cached || 0,
         output:+v.output || 0, cost:+v.cost || 0, costed:+v.costed || 0
       };
-    }catch(e){ /* 사생활 보호 모드 등 — 누적 없이 진행 */ }
+    }catch(e){ /* 저장이 막힌 환경 — 누적 없이 진행 */ }
     return Object.assign({}, ZERO);
   }
   function writeTotals(t){
     try{ localStorage.setItem(USAGE_KEY, JSON.stringify(t)); }catch(e){ /* 무시 */ }
   }
-  // 사용량은 화면에 띄우지 않는다. 개인적으로 확인할 수 있게 콘솔에만 남긴다.
+  function num(n){ return Math.round(n || 0).toLocaleString("ko-KR"); }
+  function usd(n){ return "$" + (n < 0.01 ? n.toFixed(5) : n.toFixed(4)); }
+
   function trackUsage(u){
     state.usage = u || null;
     if(!u) return;
@@ -565,12 +634,12 @@ input[type="number"]:focus-visible{outline:1.5px solid var(--gold);outline-offse
     var priced = typeof u.costUsd === "number";
     try{
       console.log(
-        "[손금보기] " + u.model +
+        "[" + MODES[state.mode].name + "] " + u.model +
         "  이번 " + (priced ? usd(u.costUsd) + " (약 " + num(u.costUsd * rate) + "원)" : "비용 미상") +
         "  누적 " + num(t.count) + "회 " + (t.costed ? usd(t.cost) + " (약 " + num(t.cost * rate) + "원)" : "비용 미상"),
         { 입력: u.inputTokens, 캐시: u.cachedTokens, 출력: u.outputTokens, 누적: t }
       );
-      if(!priced) console.log("[손금보기] " + u.model + " 단가가 요금표에 없습니다. 서버의 OPENAI_PRICES 환경 변수에 넣으면 계산됩니다.");
+      if(!priced) console.log("[사용량] " + u.model + " 단가가 요금표에 없습니다. 서버의 OPENAI_PRICES 환경 변수에 넣으면 계산됩니다.");
     }catch(e){ /* 무시 */ }
   }
 
@@ -578,15 +647,13 @@ input[type="number"]:focus-visible{outline:1.5px solid var(--gold);outline-offse
   window.palmUsage = function(){ return readTotals(); };
   window.palmUsage.reset = function(){ writeTotals(Object.assign({}, ZERO)); return readTotals(); };
 
-  function num(n){ return Math.round(n || 0).toLocaleString("ko-KR"); }
-  function usd(n){ return "$" + (n < 0.01 ? n.toFixed(5) : n.toFixed(4)); }
-
-  /* ───────── routing ───────── */
+  /* ───────── 화면 전환 ───────── */
   var stack = ["intro"];
   function go(name, push){
     $$(".view").forEach(function(v){ v.classList.toggle("on", v.id === "v-" + name); });
     if(push !== false) stack.push(name);
     $("#back").hidden = stack.length < 2;
+    $("#mark").textContent = stack.length < 2 ? "손금 · 관상" : MODES[state.mode].name;
     window.scrollTo(0,0);
   }
   $("#back").addEventListener("click", function(){
@@ -594,9 +661,66 @@ input[type="number"]:focus-visible{outline:1.5px solid var(--gold);outline-offse
     stack.pop();
     go(stack[stack.length-1] || "intro", false);
   });
-  $("#go-capture").addEventListener("click", function(){ go("capture"); });
 
-  /* ───────── chips ───────── */
+  $$(".mode").forEach(function(b){
+    b.addEventListener("click", function(){
+      state.mode = b.dataset.mode;
+      state.shots = {};
+      renderCapture();
+      go("capture");
+    });
+  });
+
+  /* ───────── 촬영 화면 구성 ───────── */
+  function renderCapture(){
+    var m = MODES[state.mode];
+    $("#cap-step").textContent = m.step;
+
+    $("#slots").className = "slots mt-32" + (m.slots.length === 1 ? " slots--one" : "");
+    $("#slots").innerHTML = m.slots.map(function(s){
+      return '<button class="slot" type="button" id="slot-' + s.id + '" data-slot="' + s.id + '">' +
+        '<span class="slot__tag">' + s.tag + "</span>" +
+        '<span class="slot__inner">' + slotArt(m.art, s.flip) +
+        '<span class="slot__label">' + s.label + "</span>" +
+        '<span class="slot__hint">촬영 · 업로드</span></span></button>';
+    }).join("");
+
+    $("#files").innerHTML = m.slots.map(function(s){
+      return '<input type="file" id="file-' + s.id + '" accept="image/*" hidden>';
+    }).join("");
+
+    $("#tips").innerHTML = m.tips.map(function(t, i){
+      return "<li><b>" + ("0" + (i+1)) + "</b><span>" + t + "</span></li>";
+    }).join("");
+
+    $("#dom-field").hidden = !m.askDominant;
+    $("#privacy").hidden = state.mode !== "face";
+    $("#analyze").textContent = m.name === "관상보기" ? "관상 해석 시작" : "손금 해석 시작";
+
+    bindSlots();
+    refreshCTA();
+  }
+
+  function bindSlots(){
+    $$(".slot").forEach(function(s){
+      s.addEventListener("click", function(){ openPicker(s.dataset.slot); });
+    });
+    MODES[state.mode].slots.forEach(function(s){
+      $("#file-" + s.id).addEventListener("change", function(e){
+        var file = e.target.files && e.target.files[0];
+        e.target.value = "";
+        if(!file) return;
+        decode(file).then(function(url){
+          if(cam.open) closeCam();
+          setShot(s.id, url);
+        }).catch(function(){
+          camNote("이 사진을 읽지 못했습니다. 다른 사진을 선택해 주세요.");
+        });
+      });
+    });
+  }
+
+  /* ───────── 선택 입력 ───────── */
   function chipGroup(id, key){
     $("#"+id).addEventListener("click", function(e){
       var b = e.target.closest(".chip"); if(!b) return;
@@ -610,8 +734,8 @@ input[type="number"]:focus-visible{outline:1.5px solid var(--gold);outline-offse
   chipGroup("focus","focus");
   $("#birth").addEventListener("input", function(e){ state.birthYear = e.target.value; });
 
-  /* ───────── image helpers ───────── */
-  var SEND_EDGE = 1200;   // 서버로 보내는 사진의 긴 변
+  /* ───────── 사진 ───────── */
+  var SEND_EDGE = 1200;
 
   function canvasToDataUrl(source, w, h){
     var scale = Math.min(1, SEND_EDGE / Math.max(w, h));
@@ -649,14 +773,20 @@ input[type="number"]:focus-visible{outline:1.5px solid var(--gold);outline-offse
     });
   }
 
-  function setShot(hand, dataUrl){
-    state[hand] = dataUrl;
-    var slot = $("#slot-" + hand);
+  function slotLabel(id){
+    var s = MODES[state.mode].slots.filter(function(x){ return x.id === id; })[0];
+    return s ? s.label : "사진";
+  }
+
+  function setShot(id, dataUrl){
+    state.shots[id] = dataUrl;
+    var slot = $("#slot-" + id);
+    if(!slot) return;
     var img = slot.querySelector(".slot__img");
     if(!img){
       img = document.createElement("img");
       img.className = "slot__img";
-      img.alt = (hand === "left" ? "왼손" : "오른손") + " 사진";
+      img.alt = slotLabel(id) + " 사진";
       slot.insertBefore(img, slot.firstChild);
     }
     img.src = dataUrl;
@@ -670,22 +800,45 @@ input[type="number"]:focus-visible{outline:1.5px solid var(--gold);outline-offse
     refreshCTA();
   }
 
+  function ready(){
+    return MODES[state.mode].slots.every(function(s){ return !!state.shots[s.id]; });
+  }
   function refreshCTA(){
-    var ready = !!(state.left && state.right);
-    $("#analyze").disabled = !ready;
-    $("#analyze-note").textContent = ready
-      ? "두 손 모두 준비되었습니다"
-      : "두 손 사진이 모두 준비되면 활성화됩니다";
+    var ok = ready();
+    $("#analyze").disabled = !ok;
+    $("#analyze-note").textContent = ok
+      ? "준비되었습니다"
+      : (state.mode === "face" ? "얼굴 사진이 준비되면 활성화됩니다" : "두 손 사진이 모두 준비되면 활성화됩니다");
   }
 
-  /* ───────── camera ───────── */
-  var cam = {
-    hand:"left",
-    facing:"environment",
-    stream:null,
-    open:false
-  };
-  var sheet = $("#cam"), video = $("#cam-video"), camMsg = $("#cam-msg");
+  /* ───────── 촬영 / 업로드 선택 ───────── */
+  var picker = { slot:"left", open:false };
+
+  function openPicker(id){
+    picker.slot = id;
+    picker.open = true;
+    $("#picker-title").textContent = slotLabel(id) + " 사진";
+    $("#picker").hidden = false;
+    document.body.style.overflow = "hidden";
+    $("#pick-camera").focus();
+  }
+  function closePicker(){
+    picker.open = false;
+    $("#picker").hidden = true;
+    document.body.style.overflow = "";
+  }
+  $("#pick-camera").addEventListener("click", function(){
+    var id = picker.slot; closePicker(); openCam(id);
+  });
+  $("#pick-album").addEventListener("click", function(){
+    var id = picker.slot; closePicker(); $("#file-" + id).click();
+  });
+  $("#pick-cancel").addEventListener("click", closePicker);
+  $("#picker-scrim").addEventListener("click", closePicker);
+
+  /* ───────── 카메라 ───────── */
+  var cam = { slot:"left", facing:"environment", stream:null, open:false };
+  var video = $("#cam-video"), camMsg = $("#cam-msg");
 
   function camNote(text){
     if(text){ camMsg.textContent = text; camMsg.hidden = false; }
@@ -705,26 +858,26 @@ input[type="number"]:focus-visible{outline:1.5px solid var(--gold);outline-offse
     $("#cam-shot").disabled = true;
     if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
       camNote("이 브라우저에서는 카메라를 열 수 없습니다. 아래 ‘앨범에서’를 눌러 사진을 선택해 주세요.");
-      return Promise.resolve(false);
+      return;
     }
-    return navigator.mediaDevices.getUserMedia({
+    navigator.mediaDevices.getUserMedia({
       video: { facingMode:{ ideal: cam.facing }, width:{ ideal:1920 }, height:{ ideal:1440 } },
       audio: false
     }).then(function(stream){
       cam.stream = stream;
       video.srcObject = stream;
       video.classList.toggle("mirror", cam.facing === "user");
-      $("#cam-guide").style.transform = cam.facing === "user" ? "scaleX(-1)" : "";
       return video.play().catch(function(){});
     }).then(function(){
-      camNote(cam.hand === "left" ? "왼손 손바닥을 가이드에 맞춰주세요" : "오른손 손바닥을 가이드에 맞춰주세요");
+      camNote(state.mode === "face"
+        ? "얼굴을 타원 안에 맞추고 정면을 봐주세요"
+        : slotLabel(cam.slot) + " 손바닥을 가이드에 맞춰주세요");
       $("#cam-shot").disabled = false;
       setTimeout(function(){ if(cam.open) camNote(""); }, 2600);
-      return true;
     }).catch(function(err){
       var name = err && err.name;
       if(name === "NotAllowedError" || name === "SecurityError"){
-        camNote("카메라 접근이 허용되지 않았습니다. 브라우저 주소창의 권한 설정에서 카메라를 허용하거나, 아래 ‘앨범에서’로 사진을 선택해 주세요.");
+        camNote("카메라 접근이 허용되지 않았습니다. 브라우저 권한 설정에서 카메라를 허용하거나, 아래 ‘앨범에서’로 사진을 선택해 주세요.");
       } else if(name === "NotFoundError" || name === "OverconstrainedError"){
         camNote("사용할 수 있는 카메라를 찾지 못했습니다. 아래 ‘앨범에서’로 사진을 선택해 주세요.");
       } else if(name === "NotReadableError"){
@@ -732,118 +885,60 @@ input[type="number"]:focus-visible{outline:1.5px solid var(--gold);outline-offse
       } else {
         camNote("카메라를 열지 못했습니다. 아래 ‘앨범에서’로 사진을 선택해 주세요.");
       }
-      return false;
     });
   }
 
-  function openCam(hand){
-    cam.hand = hand;
+  function openCam(id){
+    var m = MODES[state.mode];
+    cam.slot = id;
     cam.open = true;
-    $("#cam-title").textContent = hand === "left" ? "왼손" : "오른손";
-    $("#cam-guide").style.transform = "";
-    sheet.hidden = false;
+    cam.facing = m.facing;
+    $("#cam-title").textContent = slotLabel(id);
+    $("#cam-guide").innerHTML = m.art === "face" ? FACE_GUIDE : HAND_GUIDE;
+    $("#cam").hidden = false;
     document.body.style.overflow = "hidden";
     startStream();
   }
   function closeCam(){
     cam.open = false;
     stopStream();
-    sheet.hidden = true;
+    $("#cam").hidden = true;
     camNote("");
     document.body.style.overflow = "";
   }
-
-  /* ───────── 촬영 / 업로드 선택 ───────── */
-  var picker = { hand:"left", open:false };
-
-  function openPicker(hand){
-    picker.hand = hand;
-    picker.open = true;
-    $("#picker-title").textContent = (hand === "left" ? "왼손" : "오른손") + " 사진";
-    $("#picker").hidden = false;
-    document.body.style.overflow = "hidden";
-    $("#pick-camera").focus();
-  }
-  function closePicker(){
-    picker.open = false;
-    $("#picker").hidden = true;
-    document.body.style.overflow = "";
-  }
-
-  $$(".slot").forEach(function(s){
-    s.addEventListener("click", function(){ openPicker(s.dataset.hand); });
-  });
-  $("#pick-camera").addEventListener("click", function(){
-    var hand = picker.hand;
-    closePicker();
-    openCam(hand);
-  });
-  $("#pick-album").addEventListener("click", function(){
-    var hand = picker.hand;
-    closePicker();
-    $("#file-" + hand).click();
-  });
-  $("#pick-cancel").addEventListener("click", closePicker);
-  $("#picker-scrim").addEventListener("click", closePicker);
-
   $("#cam-close").addEventListener("click", closeCam);
   document.addEventListener("keydown", function(e){
     if(e.key !== "Escape") return;
     if(cam.open) closeCam();
     else if(picker.open) closePicker();
   });
-
   $("#cam-flip").addEventListener("click", function(){
     cam.facing = cam.facing === "environment" ? "user" : "environment";
     stopStream();
     startStream();
   });
-
   $("#cam-shot").addEventListener("click", function(){
     if(!cam.stream || !video.videoWidth) return;
     var url = canvasToDataUrl(video, video.videoWidth, video.videoHeight);
-    var hand = cam.hand;
+    var id = cam.slot;
     closeCam();
-    setShot(hand, url);
+    setShot(id, url);
   });
+  $("#cam-album").addEventListener("click", function(){ $("#file-" + cam.slot).click(); });
 
-  $("#cam-album").addEventListener("click", function(){
-    $("#file-" + cam.hand).click();
-  });
-
-  ["left","right"].forEach(function(hand){
-    $("#file-" + hand).addEventListener("change", function(e){
-      var file = e.target.files && e.target.files[0];
-      e.target.value = "";
-      if(!file) return;
-      decode(file).then(function(url){
-        if(cam.open) closeCam();
-        setShot(hand, url);
-      }).catch(function(){
-        camNote("이 사진을 읽지 못했습니다. 다른 사진을 선택해 주세요.");
-      });
-    });
-  });
-
-  /* ───────── analysis ───────── */
-  var PHASES = [
-    ["손의 모양을 살피는 중", "손바닥과 손가락의 비율을 봅니다"],
-    ["네 개의 주선을 따라가는 중", "생명선 · 두뇌선 · 감정선 · 운명선"],
-    ["보조선과 언덕을 짚는 중", "태양선 · 결혼선 · 일곱 구"],
-    ["양손을 나란히 두는 중", "타고난 결과 지금의 결을 대조합니다"],
-    ["문장으로 옮기는 중", "거의 다 왔습니다"]
-  ];
+  /* ───────── 해석 ───────── */
   var phaseTimer = null;
 
   function runPhases(){
+    var phases = MODES[state.mode].phases;
     var i = 0, el = $("#phase"), sub = $("#phase-sub");
-    el.textContent = PHASES[0][0]; sub.textContent = PHASES[0][1];
+    el.textContent = phases[0][0]; sub.textContent = phases[0][1];
     el.style.opacity = "1"; sub.style.opacity = "1";
     phaseTimer = setInterval(function(){
-      i = Math.min(i + 1, PHASES.length - 1);
+      i = Math.min(i + 1, phases.length - 1);
       el.style.opacity = "0"; sub.style.opacity = "0";
       setTimeout(function(){
-        el.textContent = PHASES[i][0]; sub.textContent = PHASES[i][1];
+        el.textContent = phases[i][0]; sub.textContent = phases[i][1];
         el.style.opacity = "1"; sub.style.opacity = "1";
       }, 380);
     }, 9000);
@@ -854,29 +949,32 @@ input[type="number"]:focus-visible{outline:1.5px solid var(--gold);outline-offse
   $("#stop").addEventListener("click", function(){ if(state.ctl) state.ctl.abort(); });
 
   function analyze(){
-    if(!state.left || !state.right) return;
+    if(!ready()) return;
     go("reading");
     $("#result").hidden = true;
     $("#result").innerHTML = "";
+    $("#loader-art").innerHTML = loaderArt(MODES[state.mode].art);
     $("#loader").hidden = false;
     runPhases();
 
     state.ctl = new AbortController();
 
+    var body = {
+      mode: state.mode,
+      dominantHand: state.dominantHand,
+      birthYear: state.birthYear,
+      focus: state.focus
+    };
+    MODES[state.mode].slots.forEach(function(s){ body[s.id] = state.shots[s.id]; });
+
     fetch("/api/read", {
       method:"POST",
       headers:{ "content-type":"application/json" },
-      body: JSON.stringify({
-        left: state.left,
-        right: state.right,
-        dominantHand: state.dominantHand,
-        birthYear: state.birthYear,
-        focus: state.focus
-      }),
+      body: JSON.stringify(body),
       signal: state.ctl.signal
     }).then(function(r){
-      return r.json().catch(function(){ return {}; }).then(function(body){
-        return { status:r.status, ok:r.ok, body:body };
+      return r.json().catch(function(){ return {}; }).then(function(b){
+        return { ok:r.ok, body:b };
       });
     }).then(function(res){
       stopPhases();
@@ -898,9 +996,9 @@ input[type="number"]:focus-visible{outline:1.5px solid var(--gold);outline-offse
     });
   }
 
-  /* ───────── render ───────── */
-  var ACCENT = { life:"var(--clay)", head:"var(--olive)", heart:"var(--gold)", fate:"var(--blue)" };
-  var ROMAN  = { life:"Ⅰ", head:"Ⅱ", heart:"Ⅲ", fate:"Ⅳ" };
+  /* ───────── 결과 ───────── */
+  var ACCENTS = ["var(--clay)", "var(--olive)", "var(--gold)", "var(--blue)", "var(--clay)"];
+  var ROMAN   = ["Ⅰ", "Ⅱ", "Ⅲ", "Ⅳ", "Ⅴ"];
 
   function esc(s){
     return String(s == null ? "" : s)
@@ -908,34 +1006,65 @@ input[type="number"]:focus-visible{outline:1.5px solid var(--gold);outline-offse
   }
   function arr(v){ return Array.isArray(v) ? v : []; }
 
+  function detailCard(item, i){
+    var o = ['<div class="card line-card" style="--accent:' + ACCENTS[i % ACCENTS.length] + '">'];
+    o.push('<div class="sec-head"><span class="num">' + (ROMAN[i] || "·") + '</span><h3>' + esc(item.name || "") + "</h3></div>");
+    o.push('<div class="swatch" style="margin-top:12px"></div>');
+    o.push('<div class="stack gap-16" style="margin-top:16px">');
+    if(item.observed)  o.push('<div class="field-row"><span class="k">관찰</span><span class="v">' + esc(item.observed) + "</span></div>");
+    if(item.tradition) o.push('<div class="field-row"><span class="k">전통적 상징</span><span class="v">' + esc(item.tradition) + "</span></div>");
+    if(item.reading)   o.push('<div class="field-row"><span class="k">해석</span><span class="v strong">' + esc(item.reading) + "</span></div>");
+    o.push("</div></div>");
+    return o.join("");
+  }
+
+  function miniList(items){
+    return '<div class="card">' + items.map(function(m){
+      var o = ['<div class="mini"><div class="mini__t"><b>' + esc(m.name || "") + "</b>" +
+        (m.state ? "<em>" + esc(m.state) + "</em>" : "") + "</div>"];
+      if(m.observed) o.push("<p>" + esc(m.observed) + "</p>");
+      if(m.reading)  o.push('<p style="color:var(--ink)">' + esc(m.reading) + "</p>");
+      o.push("</div>");
+      return o.join("");
+    }).join("") + "</div>";
+  }
+
+  function section(label, inner){
+    return '<div class="mt-48"><p class="kicker" style="margin-bottom:16px">' + esc(label) + "</p>" + inner + "</div>";
+  }
+
   function renderResult(d){
     d = d || {};
+    var m = MODES[state.mode];
+    var L = m.labels;
     var out = [];
     var q = d.photoQuality || {};
 
     out.push('<div style="padding-top:38px">');
     out.push('<p class="eyebrow">Your Reading</p>');
-    out.push('<p class="hero-word" style="margin-top:16px">' + esc(d.headline || "당신의 손") + '</p>');
+    out.push('<p class="hero-word" style="margin-top:16px">' + esc(d.headline || m.name) + "</p>");
     if(arr(d.keywords).length){
       out.push('<div class="kw" style="margin-top:20px">' +
         arr(d.keywords).slice(0,6).map(function(k){ return "<span>" + esc(k) + "</span>"; }).join("") + "</div>");
     }
     out.push("</div>");
 
-    if(state.left && state.right){
-      out.push('<div class="shots mt-32">' +
-        '<img src="' + state.left + '" alt="왼손 사진">' +
-        '<img src="' + state.right + '" alt="오른손 사진"></div>');
+    var shots = m.slots.map(function(s){ return state.shots[s.id]; }).filter(Boolean);
+    if(shots.length){
+      out.push('<div class="shots shots--' + shots.length + ' mt-32">' +
+        shots.map(function(src, i){
+          return '<img src="' + src + '" alt="' + esc(m.slots[i].label) + ' 사진">';
+        }).join("") + "</div>");
     }
 
     if(q.note){
       out.push('<div class="notice mt-32"><span style="color:var(--gold);letter-spacing:.2em;font-family:var(--f-lat);font-size:10.5px;text-transform:uppercase;display:block;margin-bottom:5px">Photo</span>' + esc(q.note) + "</div>");
     }
 
-    if(d.handShape && (d.handShape.type || d.handShape.summary)){
+    if(d.shape && (d.shape.type || d.shape.summary)){
       out.push('<div class="card mt-32">');
-      out.push('<div class="sec-head"><span class="num">A</span><h3>손의 모양 · ' + esc(d.handShape.type || "") + "</h3></div>");
-      out.push('<p style="margin-top:12px;font-size:14px;line-height:1.78;color:var(--ink-2)">' + esc(d.handShape.summary || "") + "</p></div>");
+      out.push('<div class="sec-head"><span class="num">A</span><h3>' + esc(L.shape) + " · " + esc(d.shape.type || "") + "</h3></div>");
+      out.push('<p style="margin-top:12px;font-size:14px;line-height:1.78;color:var(--ink-2)">' + esc(d.shape.summary || "") + "</p></div>");
     }
 
     if(d.overview){
@@ -943,64 +1072,34 @@ input[type="number"]:focus-visible{outline:1.5px solid var(--gold);outline-offse
       out.push('<p style="margin-top:14px;font-size:14.5px;line-height:1.86;color:var(--ink-2)">' + esc(d.overview) + "</p></div>");
     }
 
-    var lines = arr(d.lines);
-    if(lines.length){
-      out.push('<div class="mt-48"><p class="kicker" style="margin-bottom:16px">네 개의 주선</p><div class="stack gap-16">');
-      lines.forEach(function(l){
-        out.push('<div class="card line-card" style="--accent:' + (ACCENT[l.id] || "var(--gold)") + '">');
-        out.push('<div class="sec-head"><span class="num">' + (ROMAN[l.id] || "·") + '</span><h3>' + esc(l.name || "") + "</h3></div>");
-        out.push('<div class="swatch" style="margin-top:12px"></div>');
-        out.push('<div class="stack gap-16" style="margin-top:16px">');
-        if(l.observed)  out.push('<div class="field-row"><span class="k">관찰</span><span class="v">' + esc(l.observed) + "</span></div>");
-        if(l.tradition) out.push('<div class="field-row"><span class="k">전통적 상징</span><span class="v">' + esc(l.tradition) + "</span></div>");
-        if(l.reading)   out.push('<div class="field-row"><span class="k">해석</span><span class="v strong">' + esc(l.reading) + "</span></div>");
-        out.push("</div></div>");
-      });
-      out.push("</div></div>");
+    var primary = arr(d.primary);
+    if(primary.length){
+      out.push(section(L.primary, '<div class="stack gap-16">' +
+        primary.map(function(p, i){ return detailCard(p, i); }).join("") + "</div>"));
     }
 
-    var minor = arr(d.minorLines);
-    if(minor.length){
-      out.push('<div class="mt-48"><p class="kicker" style="margin-bottom:16px">보조선</p><div class="card">');
-      minor.forEach(function(m){
-        out.push('<div class="mini"><div class="mini__t"><b>' + esc(m.name || "") + "</b></div>");
-        if(m.observed) out.push("<p>" + esc(m.observed) + "</p>");
-        if(m.reading)  out.push('<p style="color:var(--ink)">' + esc(m.reading) + "</p>");
-        out.push("</div>");
-      });
-      out.push("</div></div>");
-    }
+    var secondary = arr(d.secondary);
+    if(secondary.length) out.push(section(L.secondary, miniList(secondary)));
 
-    var mounts = arr(d.mounts);
-    if(mounts.length){
-      out.push('<div class="mt-48"><p class="kicker" style="margin-bottom:16px">손의 언덕</p><div class="card">');
-      mounts.forEach(function(m){
-        out.push('<div class="mini"><div class="mini__t"><b>' + esc(m.name || "") + "</b>" +
-          (m.state ? "<em>" + esc(m.state) + "</em>" : "") + "</div>");
-        if(m.reading) out.push("<p>" + esc(m.reading) + "</p>");
-        out.push("</div>");
-      });
-      out.push("</div></div>");
-    }
+    var regions = arr(d.regions);
+    if(regions.length) out.push(section(L.regions, miniList(regions)));
 
-    var h = d.hands || {};
-    if(h.left || h.right || h.insight){
-      out.push('<div class="mt-48"><p class="kicker" style="margin-bottom:16px">양손 비교</p><div class="two">');
-      if(h.left)  out.push('<div class="card"><p class="eyebrow">Left · 왼손</p><p style="margin-top:11px;font-size:14px;line-height:1.78;color:var(--ink-2)">' + esc(h.left) + "</p></div>");
-      if(h.right) out.push('<div class="card"><p class="eyebrow">Right · 오른손</p><p style="margin-top:11px;font-size:14px;line-height:1.78;color:var(--ink-2)">' + esc(h.right) + "</p></div>");
-      out.push("</div>");
-      if(h.insight) out.push('<div class="card card--flat" style="margin-top:14px"><p style="font-size:14px;line-height:1.82">' + esc(h.insight) + "</p></div>");
-      out.push("</div>");
+    var c = d.compare;
+    if(L.compare && c && (c.a || c.b || c.insight)){
+      var inner = '<div class="two">';
+      if(c.a) inner += '<div class="card"><p class="eyebrow">' + esc(L.a) + '</p><p style="margin-top:11px;font-size:14px;line-height:1.78;color:var(--ink-2)">' + esc(c.a) + "</p></div>";
+      if(c.b) inner += '<div class="card"><p class="eyebrow">' + esc(L.b) + '</p><p style="margin-top:11px;font-size:14px;line-height:1.78;color:var(--ink-2)">' + esc(c.b) + "</p></div>";
+      inner += "</div>";
+      if(c.insight) inner += '<div class="card card--flat" style="margin-top:14px"><p style="font-size:14px;line-height:1.82">' + esc(c.insight) + "</p></div>";
+      out.push(section(L.compare, inner));
     }
 
     var adv = arr(d.advice);
     if(adv.length){
-      out.push('<div class="mt-48"><p class="kicker" style="margin-bottom:16px">오늘의 결</p><div class="stack gap-12">');
-      adv.forEach(function(a, i){
-        out.push('<div class="card"><div class="sec-head"><span class="num">' + ("0" + (i+1)) + '</span><h3>' + esc(a.title || "") + "</h3></div>");
-        out.push('<p style="margin-top:11px;font-size:14px;line-height:1.78;color:var(--ink-2)">' + esc(a.body || "") + "</p></div>");
-      });
-      out.push("</div></div>");
+      out.push(section("오늘의 결", '<div class="stack gap-12">' + adv.map(function(a, i){
+        return '<div class="card"><div class="sec-head"><span class="num">' + ("0" + (i+1)) + '</span><h3>' + esc(a.title || "") + "</h3></div>" +
+          '<p style="margin-top:11px;font-size:14px;line-height:1.78;color:var(--ink-2)">' + esc(a.body || "") + "</p></div>";
+      }).join("") + "</div>"));
     }
 
     if(d.question){
@@ -1015,7 +1114,7 @@ input[type="number"]:focus-visible{outline:1.5px solid var(--gold);outline-offse
     out.push('<button class="btn btn--quiet" id="r-home" type="button">처음으로</button>');
     out.push("</div>");
 
-    out.push('<div class="notice mt-32">이 해석은 전통 수상학의 상징 체계를 따른 읽기입니다. 수명·건강·관계의 결과를 예측하지 않으며, 판단이 필요한 일은 사람과 자료에 기대세요.</div>');
+    out.push('<div class="notice mt-32">' + esc(m.closing) + "</div>");
 
     var box = $("#result");
     box.innerHTML = out.join("");
@@ -1032,23 +1131,23 @@ input[type="number"]:focus-visible{outline:1.5px solid var(--gold);outline-offse
       missing_key:      ["서버 설정이 필요합니다", "Vercel 프로젝트에 OPENAI_API_KEY 환경 변수를 추가한 뒤 다시 배포해 주세요."],
       bad_key:          ["API 키가 유효하지 않습니다", "서버의 OPENAI_API_KEY 값을 확인해 주세요."],
       rate_limited:     ["잠시 뒤에 다시 시도해 주세요", "요청이 몰렸습니다. 몇 분 뒤 같은 사진으로 다시 눌러주세요."],
-      image_rejected:   ["사진을 읽지 못했습니다", "손바닥이 또렷하게 나오도록 밝은 곳에서 다시 촬영해 주세요."],
+      image_rejected:   ["사진을 읽지 못했습니다", "밝은 곳에서 또렷하게 나오도록 다시 촬영해 주세요."],
       image_too_large:  ["사진 용량이 너무 큽니다", "다시 촬영하면 알맞은 크기로 줄여 보냅니다."],
-      bad_image:        ["두 손 사진이 모두 필요합니다", "왼손과 오른손을 각각 촬영해 주세요."],
+      bad_image:        ["사진이 더 필요합니다", "필요한 사진을 모두 담아주세요."],
       invalid_json:     ["해석을 정리하지 못했습니다", "결과를 옮기는 과정에서 문제가 있었습니다. 다시 시도해 주세요."],
       empty_completion: ["해석이 비어 있습니다", "사진을 다시 찍어 올려주세요."],
       upstream_error:   ["해석을 마치지 못했습니다", "해석 서버가 응답하지 않았습니다. 다시 시도해 주세요."],
       upstream_unreachable: ["해석 서버에 닿지 못했습니다", "네트워크 상태를 확인하고 다시 시도해 주세요."],
       network:          ["연결이 끊겼습니다", "네트워크 상태를 확인하고 다시 시도해 주세요."]
     };
-    var m = map[code] || ["해석을 마치지 못했습니다", serverMessage || "다시 시도해 주세요."];
+    var msg = map[code] || ["해석을 마치지 못했습니다", serverMessage || "다시 시도해 주세요."];
 
     var box = $("#result");
     box.innerHTML =
       '<div style="padding-top:64px;text-align:center">' +
         '<p class="eyebrow">Interrupted</p>' +
-        '<p class="hero-word" style="margin-top:16px">' + esc(m[0]) + "</p>" +
-        '<p class="lede" style="max-width:300px;margin:14px auto 0">' + esc(m[1]) + "</p>" +
+        '<p class="hero-word" style="margin-top:16px">' + esc(msg[0]) + "</p>" +
+        '<p class="lede" style="max-width:300px;margin:14px auto 0">' + esc(msg[1]) + "</p>" +
       "</div>" +
       '<div class="stack gap-12 mt-40">' +
         '<button class="btn" id="e-again" type="button">다시 시도</button>' +
@@ -1059,6 +1158,8 @@ input[type="number"]:focus-visible{outline:1.5px solid var(--gold);outline-offse
     $("#e-again").addEventListener("click", analyze);
     $("#e-shots").addEventListener("click", function(){ stack.pop(); go("capture", false); });
   }
+
+  renderCapture();
 })();
 </script>
 </body>
