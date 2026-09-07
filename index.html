@@ -288,29 +288,6 @@ input[type="number"]:focus-visible{outline:1.5px solid var(--gold);outline-offse
 .shots{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .shots img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:14px;border:1px solid var(--rule)}
 
-/* guide */
-details{border-bottom:1px solid var(--rule)}
-details:first-of-type{border-top:1px solid var(--rule)}
-summary{list-style:none;cursor:pointer;padding:17px 0;display:flex;align-items:center;justify-content:space-between;gap:12px}
-summary::-webkit-details-marker{display:none}
-summary:focus-visible{outline:1.5px solid var(--gold);outline-offset:2px;border-radius:6px}
-.sum__l{display:flex;align-items:baseline;gap:11px}
-.sum__n{font-family:var(--f-lat);font-size:12px;letter-spacing:.14em;color:var(--gold)}
-.sum__t{font-family:var(--f-disp);font-weight:700;font-size:16px}
-.sum__t small{font-family:var(--f-body);font-weight:300;font-size:11.5px;color:var(--ink-3);margin-left:6px}
-.caret{flex:none;color:var(--ink-3);transition:transform .25s ease}
-details[open] .caret{transform:rotate(180deg)}
-.det{padding:2px 0 22px;display:flex;flex-direction:column;gap:13px}
-.det p{font-size:13.5px;line-height:1.76;color:var(--ink-2)}
-.det .lbl{font-family:var(--f-lat);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:3px}
-.det ul{margin:0;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:7px}
-.det ul li{font-size:13.5px;line-height:1.7;color:var(--ink-2);padding-left:14px;position:relative}
-.det ul li::before{content:"";position:absolute;left:0;top:.72em;width:5px;height:1px;background:var(--rule-2)}
-.det ul li b{font-weight:500;color:var(--ink)}
-.caution{background:var(--shade);border-radius:14px;padding:12px 15px;font-size:12.5px;line-height:1.68;color:var(--ink-3)}
-.src{font-size:12px;line-height:1.85;color:var(--ink-3)}
-.src b{font-weight:400;color:var(--ink-2)}
-
 .view{padding-bottom:calc(env(safe-area-inset-bottom) + 64px)}
 </style>
 </head>
@@ -485,160 +462,6 @@ details[open] .caret{transform:rotate(180deg)}
       <div style="margin-top:34px"><button class="btn btn--quiet" id="stop">중단하기</button></div>
     </div>
     <div id="result" hidden></div>
-  </section>
-
-  <!-- ══════════ GUIDE ══════════ -->
-  <section class="view" id="v-guide">
-    <div style="padding-top:34px">
-      <p class="eyebrow">Reference</p>
-      <h2 style="margin-top:10px;font-size:24px">손금 사전</h2>
-      <p class="lede">해석에 쓰이는 선과 언덕의 이름, 그리고 전통이 각 형태에 붙여온 상징을 정리했습니다. 사진 없이도 손바닥과 나란히 놓고 읽을 수 있습니다.</p>
-    </div>
-
-    <div class="mt-32">
-      <p class="kicker" style="margin-bottom:14px">Ⅰ · 네 개의 주선</p>
-
-      <details>
-        <summary>
-          <span class="sum__l"><span class="sum__n">01</span><span class="sum__t">생명선<small>生命線 · Life Line</small></span></span>
-          <svg class="caret" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
-        </summary>
-        <div class="det">
-          <p><span class="lbl">위치</span>검지와 엄지 사이에서 시작해 엄지 뿌리의 금성구를 감싸며 손목 쪽으로 내려가는 곡선.</p>
-          <p><span class="lbl">전통적 상징</span>수명이 아니라 생활의 리듬과 활력, 삶을 대하는 태도의 폭을 봅니다.</p>
-          <div><span class="lbl">형태별 읽기</span>
-            <ul>
-              <li><b>크게 벌어진 활 모양</b> · 활동 반경이 넓고 몸을 쓰는 일에서 에너지를 얻는 결</li>
-              <li><b>엄지에 바짝 붙은 선</b> · 조심스럽고 안쪽으로 힘을 모으는 생활 리듬</li>
-              <li><b>안쪽에 나란한 두 번째 선</b> · 화성선. 회복과 지지의 상징으로 읽어온 형태</li>
-              <li><b>끊겼다 겹치며 이어짐</b> · 생활 환경이 한 번 옮겨간 자리로 봅니다</li>
-              <li><b>사슬처럼 얽힌 구간</b> · 그 시기의 리듬이 고르지 않았다는 표시</li>
-            </ul>
-          </div>
-          <p class="caution">길이로 수명이나 건강을 판단하지 않습니다. 벤험(W. G. Benham) 이후의 근대 수상학도 이 해석만은 분명히 부정했습니다.</p>
-        </div>
-      </details>
-
-      <details>
-        <summary>
-          <span class="sum__l"><span class="sum__n">02</span><span class="sum__t">두뇌선<small>頭腦線 · Head Line</small></span></span>
-          <svg class="caret" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
-        </summary>
-        <div class="det">
-          <p><span class="lbl">위치</span>생명선과 같은 지점이나 그 위에서 출발해 손바닥 가운데를 가로지르는 선.</p>
-          <p><span class="lbl">전통적 상징</span>사고의 방식과 집중의 결. 머리가 좋고 나쁨이 아니라 '어떻게 생각하는가'를 봅니다.</p>
-          <div><span class="lbl">형태별 읽기</span>
-            <ul>
-              <li><b>곧게 가로지름</b> · 사실과 구조를 먼저 세우는 현실적 사고</li>
-              <li><b>월구 쪽으로 기울어짐</b> · 이미지와 연상으로 생각을 옮기는 상상형</li>
-              <li><b>끝이 둘로 갈라짐</b> · 작가의 갈래. 두 관점을 함께 굴리는 사고</li>
-              <li><b>생명선과 붙어 시작</b> · 신중하게 재고 움직이는 출발</li>
-              <li><b>생명선과 떨어져 시작</b> · 독립적이고 결단이 빠른 출발</li>
-              <li><b>짧고 또렷함</b> · 한 번에 하나를 깊게 파는 집중</li>
-            </ul>
-          </div>
-          <p class="caution">사진만으로 지능이나 학습 능력을 알 수 없습니다.</p>
-        </div>
-      </details>
-
-      <details>
-        <summary>
-          <span class="sum__l"><span class="sum__n">03</span><span class="sum__t">감정선<small>感情線 · Heart Line</small></span></span>
-          <svg class="caret" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
-        </summary>
-        <div class="det">
-          <p><span class="lbl">위치</span>새끼손가락 아래 손날에서 시작해 검지·중지 방향으로 가로지르는 위쪽 선.</p>
-          <p><span class="lbl">전통적 상징</span>감정을 다루고 드러내는 방식, 관계에서 취하는 거리.</p>
-          <div><span class="lbl">형태별 읽기</span>
-            <ul>
-              <li><b>검지 아래까지 길게</b> · 상대에게 바라는 상이 뚜렷한 애정관</li>
-              <li><b>중지 아래에서 멈춤</b> · 자기 중심을 지키며 안정을 먼저 찾는 결</li>
-              <li><b>위로 크게 휜 곡선</b> · 감정이 밖으로 잘 나오는 표현형</li>
-              <li><b>직선에 가까움</b> · 안에서 정리한 뒤 꺼내는 절제형</li>
-              <li><b>끝에 잔가지가 여럿</b> · 감정의 진폭이 넓고 상대에 따라 결이 달라짐</li>
-              <li><b>사슬 모양</b> · 마음이 여러 곳에 나뉘어 있던 시기의 표시</li>
-            </ul>
-          </div>
-          <p class="caution">연애나 결혼의 결과를 예측하지 않습니다.</p>
-        </div>
-      </details>
-
-      <details>
-        <summary>
-          <span class="sum__l"><span class="sum__n">04</span><span class="sum__t">운명선<small>運命線 · Fate Line</small></span></span>
-          <svg class="caret" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
-        </summary>
-        <div class="det">
-          <p><span class="lbl">위치</span>손목이나 손바닥 중간에서 중지 뿌리의 토성구를 향해 오르는 세로선. 토성선이라고도 합니다.</p>
-          <p><span class="lbl">전통적 상징</span>일과 삶의 방향, 사회 속에서 맡게 되는 역할의 흐름.</p>
-          <div><span class="lbl">형태별 읽기</span>
-            <ul>
-              <li><b>손목에서 곧게 올라감</b> · 이른 시기부터 한 궤도를 걸어온 형태</li>
-              <li><b>손바닥 중간에서 시작</b> · 스스로 방향을 정한 시점이 있었던 결</li>
-              <li><b>끊겼다 옆에서 다시 시작</b> · 진로의 전환. 단절이 아니라 갈아탐으로 읽습니다</li>
-              <li><b>월구에서 올라옴</b> · 타인과의 인연이나 바깥의 기회가 길을 여는 유형</li>
-              <li><b>흐리거나 보이지 않음</b> · 정해진 궤도보다 상황에 맞춰 움직이는 유형</li>
-            </ul>
-          </div>
-          <p class="caution">선이 흐리거나 없어도 불운을 뜻하지 않습니다. 자유롭게 움직인 손일수록 옅게 남습니다.</p>
-        </div>
-      </details>
-    </div>
-
-    <div class="mt-40">
-      <p class="kicker" style="margin-bottom:14px">Ⅱ · 보조선</p>
-      <div class="card">
-        <div class="mini"><div class="mini__t"><b>태양선</b><em>太陽線 · Apollo</em></div><p>약지 뿌리로 향하는 세로선. 인정과 평판, 심미안의 상징. 또렷하면 자기 색이 밖으로 잘 전해지는 결로 읽습니다.</p></div>
-        <div class="mini"><div class="mini__t"><b>결혼선</b><em>結婚線 · Union</em></div><p>새끼손가락 아래 손날의 짧은 가로선. 깊이 관여한 관계의 상징이며, 개수를 결혼 횟수로 읽지 않습니다.</p></div>
-        <div class="mini"><div class="mini__t"><b>건강선</b><em>健康線 · Mercury</em></div><p>손바닥을 비스듬히 가로지르는 선. 전통적으로 소화와 신경의 결에 빗대었으나 의학적 진단이 아닙니다.</p></div>
-        <div class="mini"><div class="mini__t"><b>금성대</b><em>金星帶 · Girdle of Venus</em></div><p>감정선 위를 반원으로 감싸는 선. 감수성과 예민함, 자극에 민감하게 반응하는 결.</p></div>
-        <div class="mini"><div class="mini__t"><b>직감선</b><em>直感線 · Intuition</em></div><p>월구에서 수성구 쪽으로 휘어 오르는 활선. 설명보다 먼저 감이 오는 유형에 빗대어 왔습니다.</p></div>
-      </div>
-    </div>
-
-    <div class="mt-40">
-      <p class="kicker" style="margin-bottom:14px">Ⅲ · 일곱 언덕</p>
-      <p class="dim" style="font-size:13px;margin-bottom:16px">손바닥에서 도톰하게 솟은 부분을 구(丘)라 부릅니다. 벤험이 정리한 체계에서는 어느 구가 발달했는지로 기질의 무게중심을 봅니다.</p>
-      <div class="card">
-        <div class="mini"><div class="mini__t"><b>목성구</b><em>검지 아래</em></div><p>자존과 주도, 이끄는 자리에 서고 싶은 마음.</p></div>
-        <div class="mini"><div class="mini__t"><b>토성구</b><em>중지 아래</em></div><p>인내와 성실, 혼자 있는 시간에서 회복하는 결.</p></div>
-        <div class="mini"><div class="mini__t"><b>태양구</b><em>약지 아래</em></div><p>심미와 표현, 아름다움을 알아보는 눈.</p></div>
-        <div class="mini"><div class="mini__t"><b>수성구</b><em>새끼손가락 아래</em></div><p>소통과 재치, 사람 사이를 잇는 감각.</p></div>
-        <div class="mini"><div class="mini__t"><b>금성구</b><em>엄지 뿌리</em></div><p>애정과 체력, 생활을 밀고 가는 힘.</p></div>
-        <div class="mini"><div class="mini__t"><b>월구</b><em>손목 바깥쪽</em></div><p>상상과 감수성, 낯선 곳으로 향하는 마음.</p></div>
-        <div class="mini"><div class="mini__t"><b>화성구</b><em>손바닥 양옆 가운데</em></div><p>제1구는 나아가는 용기, 제2구는 버티는 저항력.</p></div>
-      </div>
-    </div>
-
-    <div class="mt-40">
-      <p class="kicker" style="margin-bottom:14px">Ⅳ · 손의 네 모양</p>
-      <p class="dim" style="font-size:13px;margin-bottom:16px">다르팡티니가 나눈 손의 유형을 현대 수상학이 네 원소로 정리한 분류입니다. 손바닥의 길이와 손가락 길이의 비율로 봅니다.</p>
-      <div class="card">
-        <div class="mini"><div class="mini__t"><b>지(地)의 손</b><em>Earth</em></div><p>네모난 손바닥에 짧은 손가락. 실용과 꾸준함, 손에 잡히는 일에서 만족을 얻는 결.</p></div>
-        <div class="mini"><div class="mini__t"><b>풍(風)의 손</b><em>Air</em></div><p>네모난 손바닥에 긴 손가락. 언어와 분석, 생각을 정리해 전하는 감각.</p></div>
-        <div class="mini"><div class="mini__t"><b>수(水)의 손</b><em>Water</em></div><p>긴 손바닥에 긴 손가락. 감수성과 직관, 분위기를 먼저 읽는 결.</p></div>
-        <div class="mini"><div class="mini__t"><b>화(火)의 손</b><em>Fire</em></div><p>긴 손바닥에 짧은 손가락. 추진과 즉흥, 먼저 움직이며 길을 찾는 결.</p></div>
-      </div>
-    </div>
-
-    <div class="mt-40">
-      <p class="kicker" style="margin-bottom:14px">Ⅴ · 읽는 순서</p>
-      <div class="card card--flat">
-        <p style="font-family:var(--f-disp);font-size:15.5px;line-height:1.9">손 모양 → 네 주선 → 보조선 → 언덕 → 양손 비교</p>
-        <p class="dim" style="font-size:13px;margin-top:12px">한 가지 선만 떼어 보지 않는 것이 상학의 오랜 원칙입니다. 선 하나가 약해도 다른 선과 언덕이 그 자리를 받치고 있으면 전체의 결은 달라집니다. 주로 쓰지 않는 손은 타고난 기질, 주로 쓰는 손은 지금 만들어가는 결로 대조해 읽습니다.</p>
-      </div>
-    </div>
-
-    <div class="mt-40">
-      <p class="kicker" style="margin-bottom:14px">참고한 체계</p>
-      <p class="src">
-        <b>마의상법(麻衣相法)</b> · 송대에 정리된 동양 상법의 기본서, 손의 형태와 문양을 사람의 기질에 빗대어 읽는 틀<br>
-        <b>유장상법(柳莊相法)</b> · 명대 원충철이 정리한 상법서, 손금과 언덕의 세부 관법<br>
-        <b>Cheiro, 『The Language of the Hand』</b> · 1894, 서양 근대 수상학의 대중적 표준을 세운 저작<br>
-        <b>W. G. Benham, 『The Laws of Scientific Hand Reading』</b> · 1900, 일곱 구 체계와 선의 형태 분류를 집대성<br>
-        <b>C. S. d'Arpentigny, 『La Chirognomonie』</b> · 1843, 손 모양에 따른 유형 분류의 출발점
-      </p>
-    </div>
   </section>
 
 </div>
@@ -1230,13 +1053,11 @@ details[open] .caret{transform:rotate(180deg)}
       '<div class="stack gap-12 mt-40">' +
         '<button class="btn" id="e-again" type="button">다시 시도</button>' +
         '<button class="btn btn--ghost" id="e-shots" type="button">사진 다시 찍기</button>' +
-        '<button class="btn btn--ghost" id="e-guide" type="button">손금 사전 보기</button>' +
       "</div>";
     box.hidden = false;
     window.scrollTo(0,0);
     $("#e-again").addEventListener("click", analyze);
     $("#e-shots").addEventListener("click", function(){ stack.pop(); go("capture", false); });
-    $("#e-guide").addEventListener("click", function(){ go("guide"); });
   }
 })();
 </script>
