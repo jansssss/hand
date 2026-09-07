@@ -8,6 +8,48 @@ const OPENAI_URL = "https://api.openai.com/v1/chat/completions";
 const DEFAULT_MODEL = "gpt-4o";
 const MAX_IMAGE_CHARS = 2_800_000; // base64 data URL 한 장의 상한 (약 2MB 원본)
 
+// 100만 토큰당 USD. 단가는 바뀌므로 OPENAI_PRICES 환경 변수로 덮어쓸 수 있다.
+// 예: {"gpt-5-mini":{"input":0.25,"cachedInput":0.025,"output":2}}
+// 표에 없는 모델은 토큰 수만 돌려주고 비용은 null 로 둔다 — 지어내지 않는다.
+const PRICES = {
+  "gpt-4o":      { input: 2.50, cachedInput: 1.25,  output: 10.00 },
+  "gpt-4o-mini": { input: 0.15, cachedInput: 0.075, output:  0.60 },
+};
+
+function priceFor(model) {
+  let table = PRICES;
+  if (process.env.OPENAI_PRICES) {
+    try { table = { ...PRICES, ...JSON.parse(process.env.OPENAI_PRICES) }; } catch { /* 기본표 사용 */ }
+  }
+  if (table[model]) return table[model];
+  // 스냅샷 ID(gpt-4o-2024-08-06) 대응. 긴 이름부터 맞춰 gpt-4o-mini 가 gpt-4o 로 새지 않게 한다.
+  const key = Object.keys(table).sort((a, b) => b.length - a.length).find((k) => model.startsWith(k));
+  return key ? table[key] : null;
+}
+
+function usageOf(body, requestedModel) {
+  const u = body?.usage || {};
+  const model = body?.model || requestedModel;
+  const cachedTokens = u.prompt_tokens_details?.cached_tokens || 0;
+  const inputTokens = Math.max(0, (u.prompt_tokens || 0) - cachedTokens);
+  const outputTokens = u.completion_tokens || 0;
+
+  const p = priceFor(model);
+  const costUsd = p
+    ? (inputTokens * p.input + cachedTokens * (p.cachedInput ?? p.input) + outputTokens * p.output) / 1e6
+    : null;
+
+  const rate = Number(process.env.USD_KRW);
+  return {
+    model,
+    inputTokens,
+    cachedTokens,
+    outputTokens,
+    costUsd,
+    usdKrw: Number.isFinite(rate) && rate > 0 ? rate : 1400,
+  };
+}
+
 const SYSTEM = `당신은 동양 상법(마의상법 麻衣相法, 유장상법 柳莊相法)과 서양 수상학(Cheiro 『The Language of the Hand』 1894, W. G. Benham 『The Laws of Scientific Hand Reading』 1900, C. S. d'Arpentigny 『La Chirognomonie』 1843)의 문헌 체계에 밝은 해설자입니다. 한국어로만 답합니다.
 
 [관찰 원칙]
@@ -178,5 +220,5 @@ export default async function handler(req, res) {
   }
 
   res.setHeader("cache-control", "no-store");
-  return res.status(200).json({ ok: true, data });
+  return res.status(200).json({ ok: true, data, usage: usageOf(result.body, payload.model) });
 }

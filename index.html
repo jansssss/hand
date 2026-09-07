@@ -182,6 +182,38 @@ input[type="number"]:focus-visible{outline:1.5px solid var(--gold);outline-offse
   font-size:12.5px;line-height:1.68;color:var(--ink-3);background:var(--shade);
 }
 
+/* 촬영 / 업로드 선택 */
+.picker{position:fixed;inset:0;z-index:50;display:flex;align-items:flex-end;justify-content:center}
+.picker[hidden]{display:none}
+.picker__scrim{position:absolute;inset:0;background:rgba(20,17,14,.42);animation:scrim .25s ease both}
+.picker__panel{
+  position:relative;width:100%;max-width:460px;
+  background:var(--paper);border-top:1px solid var(--rule);
+  border-radius:24px 24px 0 0;
+  padding:22px var(--gutter) calc(env(safe-area-inset-bottom) + 22px);
+  display:flex;flex-direction:column;gap:10px;
+  animation:rise .28s cubic-bezier(.22,.8,.3,1) both;
+}
+@keyframes scrim{from{opacity:0}to{opacity:1}}
+@keyframes rise{from{transform:translateY(18px);opacity:0}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.picker__scrim,.picker__panel{animation:none}}
+.picker__title{
+  font-family:var(--f-disp);font-weight:700;font-size:15px;
+  text-align:center;padding:2px 0 12px;color:var(--ink-2);
+}
+.picker__opt{
+  display:flex;align-items:center;gap:14px;width:100%;text-align:left;
+  padding:15px 18px;border:1px solid var(--rule);border-radius:18px;
+  background:var(--card);color:var(--ink);font-family:var(--f-body);cursor:pointer;
+  transition:transform .18s ease;
+}
+.picker__opt:active{transform:scale(.988)}
+.picker__opt:focus-visible{outline:1.5px solid var(--gold);outline-offset:3px}
+.picker__opt svg{width:24px;height:24px;flex:none;color:var(--gold)}
+.picker__opt span{display:flex;flex-direction:column;gap:2px;min-width:0}
+.picker__opt b{font-family:var(--f-disp);font-weight:700;font-size:15px}
+.picker__opt i{font-style:normal;font-size:11.5px;color:var(--ink-3)}
+
 /* camera sheet */
 .sheet{position:fixed;inset:0;z-index:60;background:#0E0C0A;display:flex;flex-direction:column;color:#F2EBDD}
 .sheet[hidden]{display:none}
@@ -256,6 +288,25 @@ input[type="number"]:focus-visible{outline:1.5px solid var(--gold);outline-offse
 .shots{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .shots img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:14px;border:1px solid var(--rule)}
 
+/* api usage */
+.usage{border:1px solid var(--rule);border-radius:var(--radius);padding:20px 22px;background:var(--shade)}
+.usage__row{
+  display:flex;align-items:baseline;justify-content:space-between;gap:14px;
+  padding:11px 0;border-bottom:1px solid var(--rule);
+}
+.usage__row:last-of-type{border-bottom:0}
+.usage__row span{font-size:13px;color:var(--ink-3)}
+.usage__row b{
+  font-family:var(--f-lat);font-size:16px;font-weight:500;color:var(--ink);
+  font-variant-numeric:tabular-nums;letter-spacing:.01em;
+}
+.usage__row b i{font-style:normal;font-size:12px;color:var(--ink-3);margin-left:7px}
+.usage__meta{
+  font-size:11.5px;line-height:1.7;color:var(--ink-3);
+  font-variant-numeric:tabular-nums;padding-bottom:4px;
+}
+.usage__foot{display:flex;justify-content:flex-end;margin-top:10px}
+
 /* guide */
 details{border-bottom:1px solid var(--rule)}
 details:first-of-type{border-top:1px solid var(--rule)}
@@ -280,27 +331,6 @@ details[open] .caret{transform:rotate(180deg)}
 .src b{font-weight:400;color:var(--ink-2)}
 
 .view{padding-bottom:calc(env(safe-area-inset-bottom) + 64px)}
-
-/* background cutout */
-.slot__busy{
-  position:absolute;inset:0;z-index:3;display:grid;place-items:center;
-  background:color-mix(in srgb, var(--paper) 60%, transparent);
-}
-.slot__busy b{
-  font-weight:300;font-size:11.5px;color:var(--ink-2);background:var(--card);
-  border:1px solid var(--rule);border-radius:999px;padding:5px 12px;
-  animation:pulse 1.6s ease-in-out infinite;
-}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
-@media (prefers-reduced-motion:reduce){.slot__busy b{animation:none}}
-.seg{
-  display:flex;align-items:center;justify-content:space-between;gap:14px;
-  margin-top:12px;padding:14px 16px;border:1px solid var(--rule);
-  border-radius:16px;background:var(--card);
-}
-.seg__t{display:block;font-family:var(--f-disp);font-weight:700;font-size:14px}
-.seg__d{display:block;font-size:11.5px;line-height:1.5;color:var(--ink-3);margin-top:2px}
-.seg .chip{padding:7px 13px;font-size:12.5px}
 </style>
 </head>
 <body>
@@ -388,7 +418,7 @@ details[open] .caret{transform:rotate(180deg)}
             <rect x="18" y="132" width="20" height="62" rx="10" transform="rotate(-32 28 163)"/>
           </svg>
           <span class="slot__label">왼손</span>
-          <span class="slot__hint">눌러서 촬영</span>
+          <span class="slot__hint">촬영 · 업로드</span>
         </span>
       </button>
 
@@ -402,23 +432,13 @@ details[open] .caret{transform:rotate(180deg)}
             <rect x="18" y="132" width="20" height="62" rx="10" transform="rotate(-32 28 163)"/>
           </svg>
           <span class="slot__label">오른손</span>
-          <span class="slot__hint">눌러서 촬영</span>
+          <span class="slot__hint">촬영 · 업로드</span>
         </span>
       </button>
     </div>
     <input type="file" id="file-left" accept="image/*" hidden>
     <input type="file" id="file-right" accept="image/*" hidden>
 
-    <div class="seg">
-      <div>
-        <span class="seg__t">배경 지우기</span>
-        <span class="seg__d" id="seg-desc">손만 남기고 주변을 지웁니다</span>
-      </div>
-      <div class="chips" id="segmode">
-        <button class="chip" type="button" aria-pressed="true" data-v="on">켜기</button>
-        <button class="chip" type="button" aria-pressed="false" data-v="off">끄기</button>
-      </div>
-    </div>
 
     <div class="card mt-32">
       <p class="eyebrow">Shooting Notes</p>
@@ -644,6 +664,31 @@ details[open] .caret{transform:rotate(180deg)}
 
 </div>
 
+<!-- ══════════ 촬영 / 업로드 선택 ══════════ -->
+<div class="picker" id="picker" hidden>
+  <div class="picker__scrim" id="picker-scrim"></div>
+  <div class="picker__panel" role="dialog" aria-modal="true" aria-labelledby="picker-title">
+    <p class="picker__title" id="picker-title">왼손 사진</p>
+    <button class="picker__opt" id="pick-camera" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M3 8.5A1.5 1.5 0 014.5 7h2.2a1 1 0 00.83-.45l.94-1.4A1 1 0 019.3 4.7h5.4a1 1 0 01.83.45l.94 1.4a1 1 0 00.83.45h2.2A1.5 1.5 0 0121 8.5v9a1.5 1.5 0 01-1.5 1.5h-15A1.5 1.5 0 013 17.5z"/>
+        <circle cx="12" cy="13" r="3.4"/>
+      </svg>
+      <span><b>카메라로 촬영</b><i>가이드에 맞춰 바로 찍습니다</i></span>
+    </button>
+    <button class="picker__opt" id="pick-album" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="3" y="5" width="18" height="14" rx="2.2"/>
+        <circle cx="8.6" cy="10" r="1.6"/>
+        <path d="M3.6 17.2l4.9-4.3a1.4 1.4 0 011.9.05L14 17"/>
+        <path d="M13.4 14.3l2.3-2a1.4 1.4 0 011.9.04L21 15.6"/>
+      </svg>
+      <span><b>사진 업로드</b><i>앨범에 있는 사진을 고릅니다</i></span>
+    </button>
+    <button class="btn btn--quiet" id="pick-cancel" type="button" style="margin-top:6px">취소</button>
+  </div>
+</div>
+
 <!-- ══════════ CAMERA SHEET ══════════ -->
 <div class="sheet" id="cam" hidden role="dialog" aria-modal="true" aria-label="손바닥 촬영">
   <div class="sheet__top">
@@ -671,136 +716,6 @@ details[open] .caret{transform:rotate(180deg)}
   </div>
 </div>
 
-<!-- 배경 분리: MediaPipe ImageSegmenter (selfie multiclass). 실패하면 원본 사진을 그대로 쓴다. -->
-<script type="module">
-const WASM  = "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@1.0.1/wasm";
-const BUNDLE = "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@1.0.1/vision_bundle.mjs";
-const MODEL = "https://storage.googleapis.com/mediapipe-models/image_segmenter/selfie_multiclass_256x256/float32/latest/selfie_multiclass_256x256.tflite";
-
-const PAPER = "#F1E9DC";   // 잘라낸 손 뒤에 깔리는 종이색
-const OUT_W = 900, OUT_H = 1200;
-
-let segmenter = null;
-
-async function load(){
-  if(segmenter) return segmenter;
-  const { FilesetResolver, ImageSegmenter } = await import(BUNDLE);
-  const fileset = await FilesetResolver.forVisionTasks(WASM);
-  const opts = {
-    baseOptions: { modelAssetPath: MODEL, delegate: "GPU" },
-    runningMode: "IMAGE",
-    outputCategoryMask: true,
-    outputConfidenceMasks: false,
-  };
-  try {
-    segmenter = await ImageSegmenter.createFromOptions(fileset, opts);
-  } catch {
-    opts.baseOptions.delegate = "CPU";
-    segmenter = await ImageSegmenter.createFromOptions(fileset, opts);
-  }
-  return segmenter;
-}
-
-/**
- * 마스크의 경계 상자를 원본 좌표의 3:4 크롭으로 옮긴다.
- * 여백 10%를 두르고 비율만 맞춘다. 상자가 사진 밖으로 나가도 가두지 않는다 —
- * 어차피 뒤를 종이색으로 덮으므로, 넘어간 만큼은 여백이 되고 손은 잘리지 않는다.
- */
-function cropBox(minX, minY, maxX, maxY, mw, mh, sw, sh){
-  const fx = sw / mw, fy = sh / mh;
-  let x0 = minX * fx, x1 = (maxX + 1) * fx;
-  let y0 = minY * fy, y1 = (maxY + 1) * fy;
-
-  const padX = (x1 - x0) * 0.10, padY = (y1 - y0) * 0.10;
-  x0 -= padX; x1 += padX; y0 -= padY; y1 += padY;
-
-  let cw = x1 - x0, ch = y1 - y0;
-  const ratio = 3 / 4;
-  if(cw / ch > ratio) ch = cw / ratio; else cw = ch * ratio;
-
-  const cx = (x0 + x1) / 2, cy = (y0 + y1) / 2;
-  return { sx: cx - cw / 2, sy: cy - ch / 2, cw, ch, fx, fy };
-}
-
-/**
- * 손을 찾아 배경을 종이색으로 바꾸고 3:4로 잘라낸 JPEG data URL을 돌려준다.
- * 마스크가 미덥지 않으면(너무 적거나 화면 대부분이면) null 을 돌려 원본을 쓰게 한다.
- */
-async function cutout(source){
-  const seg = await load();
-  const sw = source.width, sh = source.height;
-
-  // 모델에 넣을 작업용 사본
-  const k = Math.min(1, 512 / Math.max(sw, sh));
-  const work = document.createElement("canvas");
-  work.width  = Math.max(1, Math.round(sw * k));
-  work.height = Math.max(1, Math.round(sh * k));
-  work.getContext("2d").drawImage(source, 0, 0, work.width, work.height);
-
-  const result = seg.segment(work);
-  const mask = result.categoryMask;
-  if(!mask){ result.close?.(); return null; }
-
-  const mw = mask.width, mh = mask.height;
-  const cat = mask.getAsUint8Array();
-
-  let minX = mw, minY = mh, maxX = -1, maxY = -1, on = 0;
-  for(let y = 0; y < mh; y++){
-    for(let x = 0; x < mw; x++){
-      if(cat[y * mw + x] !== 0){          // 0 = 배경, 그 밖은 모두 사람
-        on++;
-        if(x < minX) minX = x;
-        if(x > maxX) maxX = x;
-        if(y < minY) minY = y;
-        if(y > maxY) maxY = y;
-      }
-    }
-  }
-
-  // 마스크를 알파 채널로 옮긴다 (흰색 = 남길 곳)
-  const mc = document.createElement("canvas");
-  mc.width = mw; mc.height = mh;
-  const mctx = mc.getContext("2d");
-  const buf = mctx.createImageData(mw, mh);
-  for(let i = 0; i < mw * mh; i++){
-    buf.data[i * 4] = buf.data[i * 4 + 1] = buf.data[i * 4 + 2] = 255;
-    buf.data[i * 4 + 3] = cat[i] !== 0 ? 255 : 0;
-  }
-  mctx.putImageData(buf, 0, 0);
-
-  mask.close?.();
-  result.close?.();
-
-  const coverage = on / (mw * mh);
-  if(maxX < 0 || coverage < 0.06 || coverage > 0.92) return null;
-
-  const { sx, sy, cw, ch, fx, fy } = cropBox(minX, minY, maxX, maxY, mw, mh, sw, sh);
-
-  const out = document.createElement("canvas");
-  out.width = OUT_W; out.height = OUT_H;
-  const ctx = out.getContext("2d");
-  ctx.imageSmoothingEnabled = true;
-  ctx.imageSmoothingQuality = "high";
-
-  // 1) 마스크를 부드럽게 확대해 깔고
-  try { ctx.filter = "blur(2.5px)"; } catch { /* 지원 안 하면 그대로 */ }
-  ctx.drawImage(mc, sx / fx, sy / fy, cw / fx, ch / fy, 0, 0, OUT_W, OUT_H);
-  ctx.filter = "none";
-  // 2) 그 안쪽에만 사진을 채우고
-  ctx.globalCompositeOperation = "source-in";
-  ctx.drawImage(source, sx, sy, cw, ch, 0, 0, OUT_W, OUT_H);
-  // 3) 뒤를 종이색으로 덮는다
-  ctx.globalCompositeOperation = "destination-over";
-  ctx.fillStyle = PAPER;
-  ctx.fillRect(0, 0, OUT_W, OUT_H);
-  ctx.globalCompositeOperation = "source-over";
-
-  return out.toDataURL("image/jpeg", 0.85);
-}
-
-window.PalmSeg = { cutout };
-</script>
-
 <script>
 (function(){
   "use strict";
@@ -809,14 +724,44 @@ window.PalmSeg = { cutout };
   var $$ = function(s){ return Array.prototype.slice.call(document.querySelectorAll(s)); };
 
   var state = {
-    left:null, right:null,          // 화면과 서버에 쓰는 data URL
-    src:{},                         // 촬영 원본 캔버스 (배경 지우기 재시도용)
-    raw:{}, clean:{},               // 원본 / 배경 지운 data URL
-    busy:{}, token:{},
-    cutBg:true,
+    left:null, right:null,          // 손 사진 data URL
     dominantHand:"", focus:"", birthYear:"",
+    usage:null,                     // 이번 해석의 사용량
     ctl:null
   };
+
+  /* ───────── API 사용량 ───────── */
+  var USAGE_KEY = "palm.usage.v1";
+  var ZERO = { count:0, input:0, cached:0, output:0, cost:0, costed:0 };
+
+  function readTotals(){
+    try{
+      var v = JSON.parse(localStorage.getItem(USAGE_KEY) || "null");
+      if(v && typeof v === "object") return {
+        count:+v.count || 0, input:+v.input || 0, cached:+v.cached || 0,
+        output:+v.output || 0, cost:+v.cost || 0, costed:+v.costed || 0
+      };
+    }catch(e){ /* 사생활 보호 모드 등 — 누적 없이 진행 */ }
+    return Object.assign({}, ZERO);
+  }
+  function writeTotals(t){
+    try{ localStorage.setItem(USAGE_KEY, JSON.stringify(t)); }catch(e){ /* 무시 */ }
+  }
+  function trackUsage(u){
+    state.usage = u || null;
+    if(!u) return;
+    var t = readTotals();
+    t.count  += 1;
+    t.input  += u.inputTokens  || 0;
+    t.cached += u.cachedTokens || 0;
+    t.output += u.outputTokens || 0;
+    if(typeof u.costUsd === "number"){ t.cost += u.costUsd; t.costed += 1; }
+    writeTotals(t);
+  }
+
+  function num(n){ return Math.round(n || 0).toLocaleString("ko-KR"); }
+  function usd(n){ return "$" + (n < 0.01 ? n.toFixed(5) : n.toFixed(4)); }
+  function won(n, rate){ return "약 " + Math.round(n * rate).toLocaleString("ko-KR") + "원"; }
 
   /* ───────── routing ───────── */
   var stack = ["intro"];
@@ -850,16 +795,6 @@ window.PalmSeg = { cutout };
 
   /* ───────── image helpers ───────── */
   var SEND_EDGE = 1200;   // 서버로 보내는 사진의 긴 변
-  var WORK_EDGE = 1600;   // 배경 분리에 쓰는 작업본의 긴 변
-
-  function snapshot(source, w, h){
-    var scale = Math.min(1, WORK_EDGE / Math.max(w, h));
-    var c = document.createElement("canvas");
-    c.width  = Math.max(1, Math.round(w * scale));
-    c.height = Math.max(1, Math.round(h * scale));
-    c.getContext("2d").drawImage(source, 0, 0, c.width, c.height);
-    return c;
-  }
 
   function canvasToDataUrl(source, w, h){
     var scale = Math.min(1, SEND_EDGE / Math.max(w, h));
@@ -874,9 +809,9 @@ window.PalmSeg = { cutout };
     return new Promise(function(resolve, reject){
       if(window.createImageBitmap){
         createImageBitmap(file, { imageOrientation:"from-image" }).then(function(bmp){
-          var c = snapshot(bmp, bmp.width, bmp.height);
+          var url = canvasToDataUrl(bmp, bmp.width, bmp.height);
           if(bmp.close) bmp.close();
-          resolve(c);
+          resolve(url);
         }).catch(function(){ viaImg(file).then(resolve, reject); });
       } else {
         viaImg(file).then(resolve, reject);
@@ -888,63 +823,26 @@ window.PalmSeg = { cutout };
       var url = URL.createObjectURL(file);
       var img = new Image();
       img.onload = function(){
-        var c = snapshot(img, img.naturalWidth, img.naturalHeight);
+        var out = canvasToDataUrl(img, img.naturalWidth, img.naturalHeight);
         URL.revokeObjectURL(url);
-        resolve(c);
+        resolve(out);
       };
       img.onerror = function(){ URL.revokeObjectURL(url); reject(new Error("decode_failed")); };
       img.src = url;
     });
   }
 
-  var SEG_DESC = "손만 남기고 주변을 지웁니다";
-  function segNote(msg){ $("#seg-desc").textContent = msg || SEG_DESC; }
-
-  /** 촬영 결과를 받아 즉시 보여주고, 배경 분리는 뒤에서 돌린다. */
-  function accept(hand, canvas){
-    state.token[hand] = (state.token[hand] || 0) + 1;
-    state.src[hand]   = canvas;
-    state.raw[hand]   = canvasToDataUrl(canvas, canvas.width, canvas.height);
-    state.clean[hand] = null;
-    segNote();
-    show(hand);
-    if(state.cutBg) refine(hand);
-  }
-
-  function refine(hand){
-    var canvas = state.src[hand];
-    if(!canvas || !window.PalmSeg || state.clean[hand]) return;
-    var token = state.token[hand];
-    setBusy(hand, true);
-    window.PalmSeg.cutout(canvas).then(function(url){
-      if(state.token[hand] !== token) return;
-      if(url){ state.clean[hand] = url; show(hand); }
-      else segNote("이 사진에서는 손을 찾지 못해 원본을 그대로 씁니다");
-    }).catch(function(){
-      segNote("배경을 지우지 못해 원본을 그대로 씁니다");
-    }).then(function(){
-      if(state.token[hand] === token) setBusy(hand, false);
-    });
-  }
-
-  function show(hand){
-    var url = (state.cutBg && state.clean[hand]) ? state.clean[hand] : state.raw[hand];
-    state[hand] = url || null;
+  function setShot(hand, dataUrl){
+    state[hand] = dataUrl;
     var slot = $("#slot-" + hand);
     var img = slot.querySelector(".slot__img");
-    if(!url){
-      if(img) img.remove();
-      slot.classList.remove("filled");
-      refreshCTA();
-      return;
-    }
     if(!img){
       img = document.createElement("img");
       img.className = "slot__img";
       img.alt = (hand === "left" ? "왼손" : "오른손") + " 사진";
       slot.insertBefore(img, slot.firstChild);
     }
-    img.src = url;
+    img.src = dataUrl;
     if(!slot.querySelector(".slot__redo")){
       var redo = document.createElement("span");
       redo.className = "slot__redo";
@@ -955,43 +853,13 @@ window.PalmSeg = { cutout };
     refreshCTA();
   }
 
-  function setBusy(hand, on){
-    state.busy[hand] = on;
-    var slot = $("#slot-" + hand);
-    var el = slot.querySelector(".slot__busy");
-    if(on && !el){
-      el = document.createElement("span");
-      el.className = "slot__busy";
-      var label = document.createElement("b");
-      label.textContent = "배경 정리 중";
-      el.appendChild(label);
-      slot.appendChild(el);
-    } else if(!on && el){
-      el.remove();
-    }
-    refreshCTA();
-  }
-
   function refreshCTA(){
     var ready = !!(state.left && state.right);
-    var busy  = !!(state.busy.left || state.busy.right);
-    $("#analyze").disabled = !ready || busy;
-    $("#analyze-note").textContent = busy
-      ? "배경을 정리하는 중입니다"
-      : ready ? "두 손 모두 준비되었습니다"
-              : "두 손 사진이 모두 준비되면 활성화됩니다";
+    $("#analyze").disabled = !ready;
+    $("#analyze-note").textContent = ready
+      ? "두 손 모두 준비되었습니다"
+      : "두 손 사진이 모두 준비되면 활성화됩니다";
   }
-
-  $("#segmode").addEventListener("click", function(e){
-    var b = e.target.closest(".chip"); if(!b) return;
-    $$("#segmode .chip").forEach(function(c){ c.setAttribute("aria-pressed", String(c === b)); });
-    state.cutBg = b.dataset.v === "on";
-    segNote();
-    ["left","right"].forEach(function(h){
-      show(h);
-      if(state.cutBg) refine(h);
-    });
-  });
 
   /* ───────── camera ───────── */
   var cam = {
@@ -1068,12 +936,44 @@ window.PalmSeg = { cutout };
     document.body.style.overflow = "";
   }
 
+  /* ───────── 촬영 / 업로드 선택 ───────── */
+  var picker = { hand:"left", open:false };
+
+  function openPicker(hand){
+    picker.hand = hand;
+    picker.open = true;
+    $("#picker-title").textContent = (hand === "left" ? "왼손" : "오른손") + " 사진";
+    $("#picker").hidden = false;
+    document.body.style.overflow = "hidden";
+    $("#pick-camera").focus();
+  }
+  function closePicker(){
+    picker.open = false;
+    $("#picker").hidden = true;
+    document.body.style.overflow = "";
+  }
+
   $$(".slot").forEach(function(s){
-    s.addEventListener("click", function(){ openCam(s.dataset.hand); });
+    s.addEventListener("click", function(){ openPicker(s.dataset.hand); });
   });
+  $("#pick-camera").addEventListener("click", function(){
+    var hand = picker.hand;
+    closePicker();
+    openCam(hand);
+  });
+  $("#pick-album").addEventListener("click", function(){
+    var hand = picker.hand;
+    closePicker();
+    $("#file-" + hand).click();
+  });
+  $("#pick-cancel").addEventListener("click", closePicker);
+  $("#picker-scrim").addEventListener("click", closePicker);
+
   $("#cam-close").addEventListener("click", closeCam);
   document.addEventListener("keydown", function(e){
-    if(e.key === "Escape" && cam.open) closeCam();
+    if(e.key !== "Escape") return;
+    if(cam.open) closeCam();
+    else if(picker.open) closePicker();
   });
 
   $("#cam-flip").addEventListener("click", function(){
@@ -1084,10 +984,10 @@ window.PalmSeg = { cutout };
 
   $("#cam-shot").addEventListener("click", function(){
     if(!cam.stream || !video.videoWidth) return;
-    var snap = snapshot(video, video.videoWidth, video.videoHeight);
+    var url = canvasToDataUrl(video, video.videoWidth, video.videoHeight);
     var hand = cam.hand;
     closeCam();
-    accept(hand, snap);
+    setShot(hand, url);
   });
 
   $("#cam-album").addEventListener("click", function(){
@@ -1099,9 +999,9 @@ window.PalmSeg = { cutout };
       var file = e.target.files && e.target.files[0];
       e.target.value = "";
       if(!file) return;
-      decode(file).then(function(canvas){
+      decode(file).then(function(url){
         if(cam.open) closeCam();
-        accept(hand, canvas);
+        setShot(hand, url);
       }).catch(function(){
         camNote("이 사진을 읽지 못했습니다. 다른 사진을 선택해 주세요.");
       });
@@ -1165,8 +1065,12 @@ window.PalmSeg = { cutout };
       stopPhases();
       state.ctl = null;
       $("#loader").hidden = true;
-      if(res.ok && res.body && res.body.data) renderResult(res.body.data);
-      else renderError(res.body && res.body.error, res.body && res.body.message);
+      if(res.ok && res.body && res.body.data){
+        trackUsage(res.body.usage);
+        renderResult(res.body.data);
+      } else {
+        renderError(res.body && res.body.error, res.body && res.body.message);
+      }
     }).catch(function(err){
       stopPhases();
       var aborted = err && err.name === "AbortError";
@@ -1186,6 +1090,56 @@ window.PalmSeg = { cutout };
       .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
   }
   function arr(v){ return Array.isArray(v) ? v : []; }
+
+  function usageCard(){
+    var u = state.usage;
+    if(!u) return "";
+    var t = readTotals();
+    var rate = u.usdKrw || 1400;
+    var priced = typeof u.costUsd === "number";
+    var o = [];
+
+    o.push('<div class="usage mt-48">');
+    o.push('<p class="kicker" style="margin-bottom:4px">API Usage</p>');
+
+    o.push('<div class="usage__row"><span>이번 해석</span><b>');
+    o.push(priced ? usd(u.costUsd) + "<i>" + won(u.costUsd, rate) + "</i>"
+                  : num(u.inputTokens + u.cachedTokens + u.outputTokens) + " 토큰");
+    o.push("</b></div>");
+    o.push('<p class="usage__meta">입력 ' + num(u.inputTokens) +
+      (u.cachedTokens ? " · 캐시 " + num(u.cachedTokens) : "") +
+      " · 출력 " + num(u.outputTokens) + " 토큰 · " + esc(u.model) + "</p>");
+
+    if(t.count > 1){
+      o.push('<div class="usage__row"><span>누적 ' + num(t.count) + '회</span><b>');
+      o.push(t.costed ? usd(t.cost) + "<i>" + won(t.cost, rate) + "</i>"
+                      : num(t.input + t.cached + t.output) + " 토큰");
+      o.push("</b></div>");
+      o.push('<p class="usage__meta">입력 ' + num(t.input) + " · 출력 " + num(t.output) + " 토큰" +
+        (t.costed && t.costed < t.count
+          ? " · " + num(t.count - t.costed) + "회는 요금표에 없는 모델이라 비용에서 뺐습니다"
+          : "") + "</p>");
+      o.push('<div class="usage__foot"><button class="btn btn--quiet" id="u-reset" type="button">누적 지우기</button></div>');
+    }
+
+    o.push('<p class="usage__meta" style="padding-top:8px">' + (priced
+      ? "원화는 1 USD = " + num(rate) + "원 기준 환산입니다. 누적은 이 기기에만 저장되며, 실제 청구액은 OpenAI 대시보드를 보세요."
+      : esc(u.model) + " 단가가 요금표에 없어 비용을 계산하지 않았습니다. 서버의 OPENAI_PRICES 환경 변수에 단가를 넣으면 표시됩니다.") + "</p>");
+    o.push("</div>");
+    return o.join("");
+  }
+
+  function bindUsageReset(){
+    var btn = $("#u-reset");
+    if(!btn) return;
+    btn.addEventListener("click", function(){
+      var card = btn.closest(".usage");
+      writeTotals(Object.assign({}, ZERO));
+      var tmp = document.createElement("div");
+      tmp.innerHTML = usageCard();
+      if(card && tmp.firstChild) card.replaceWith(tmp.firstChild);
+    });
+  }
 
   function renderResult(d){
     d = d || {};
@@ -1288,6 +1242,8 @@ window.PalmSeg = { cutout };
       out.push('<p class="quote" style="margin-top:16px">' + esc(d.question) + "</p></div>");
     }
 
+    out.push(usageCard());
+
     out.push('<div class="stack gap-12 mt-48">');
     out.push('<button class="btn btn--ghost" id="r-again" type="button">다시 해석하기</button>');
     out.push('<button class="btn btn--ghost" id="r-shots" type="button">사진 다시 찍기</button>');
@@ -1302,6 +1258,7 @@ window.PalmSeg = { cutout };
     box.hidden = false;
     window.scrollTo(0,0);
 
+    bindUsageReset();
     $("#r-again").addEventListener("click", analyze);
     $("#r-shots").addEventListener("click", function(){ stack.pop(); go("capture", false); });
     $("#r-guide").addEventListener("click", function(){ go("guide"); });
