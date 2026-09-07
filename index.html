@@ -288,25 +288,6 @@ input[type="number"]:focus-visible{outline:1.5px solid var(--gold);outline-offse
 .shots{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .shots img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:14px;border:1px solid var(--rule)}
 
-/* api usage */
-.usage{border:1px solid var(--rule);border-radius:var(--radius);padding:20px 22px;background:var(--shade)}
-.usage__row{
-  display:flex;align-items:baseline;justify-content:space-between;gap:14px;
-  padding:11px 0;border-bottom:1px solid var(--rule);
-}
-.usage__row:last-of-type{border-bottom:0}
-.usage__row span{font-size:13px;color:var(--ink-3)}
-.usage__row b{
-  font-family:var(--f-lat);font-size:16px;font-weight:500;color:var(--ink);
-  font-variant-numeric:tabular-nums;letter-spacing:.01em;
-}
-.usage__row b i{font-style:normal;font-size:12px;color:var(--ink-3);margin-left:7px}
-.usage__meta{
-  font-size:11.5px;line-height:1.7;color:var(--ink-3);
-  font-variant-numeric:tabular-nums;padding-bottom:4px;
-}
-.usage__foot{display:flex;justify-content:flex-end;margin-top:10px}
-
 /* guide */
 details{border-bottom:1px solid var(--rule)}
 details:first-of-type{border-top:1px solid var(--rule)}
@@ -391,7 +372,6 @@ details[open] .caret{transform:rotate(180deg)}
 
     <div class="stack gap-12 mt-40">
       <button class="btn" id="go-capture">두 손 사진으로 시작하기</button>
-      <button class="btn btn--ghost" id="go-guide">손금 사전 먼저 보기</button>
     </div>
 
     <div class="notice mt-32">
@@ -404,7 +384,6 @@ details[open] .caret{transform:rotate(180deg)}
     <div style="padding-top:34px">
       <p class="kicker">Step 01</p>
       <h2 style="margin-top:10px;font-size:24px">두 손바닥을 담아주세요</h2>
-      <p class="lede">전통 수상학은 주로 쓰지 않는 손에서 타고난 기질을, 주로 쓰는 손에서 지금 만들어가는 결을 읽습니다. 그래서 두 손이 모두 필요합니다.</p>
     </div>
 
     <div class="slots mt-32">
@@ -747,6 +726,7 @@ details[open] .caret{transform:rotate(180deg)}
   function writeTotals(t){
     try{ localStorage.setItem(USAGE_KEY, JSON.stringify(t)); }catch(e){ /* 무시 */ }
   }
+  // 사용량은 화면에 띄우지 않는다. 개인적으로 확인할 수 있게 콘솔에만 남긴다.
   function trackUsage(u){
     state.usage = u || null;
     if(!u) return;
@@ -757,11 +737,26 @@ details[open] .caret{transform:rotate(180deg)}
     t.output += u.outputTokens || 0;
     if(typeof u.costUsd === "number"){ t.cost += u.costUsd; t.costed += 1; }
     writeTotals(t);
+
+    var rate = u.usdKrw || 1400;
+    var priced = typeof u.costUsd === "number";
+    try{
+      console.log(
+        "[손금보기] " + u.model +
+        "  이번 " + (priced ? usd(u.costUsd) + " (약 " + num(u.costUsd * rate) + "원)" : "비용 미상") +
+        "  누적 " + num(t.count) + "회 " + (t.costed ? usd(t.cost) + " (약 " + num(t.cost * rate) + "원)" : "비용 미상"),
+        { 입력: u.inputTokens, 캐시: u.cachedTokens, 출력: u.outputTokens, 누적: t }
+      );
+      if(!priced) console.log("[손금보기] " + u.model + " 단가가 요금표에 없습니다. 서버의 OPENAI_PRICES 환경 변수에 넣으면 계산됩니다.");
+    }catch(e){ /* 무시 */ }
   }
+
+  // 콘솔에서 직접 확인하고 지울 수 있게 열어둔다: palmUsage() / palmUsage.reset()
+  window.palmUsage = function(){ return readTotals(); };
+  window.palmUsage.reset = function(){ writeTotals(Object.assign({}, ZERO)); return readTotals(); };
 
   function num(n){ return Math.round(n || 0).toLocaleString("ko-KR"); }
   function usd(n){ return "$" + (n < 0.01 ? n.toFixed(5) : n.toFixed(4)); }
-  function won(n, rate){ return "약 " + Math.round(n * rate).toLocaleString("ko-KR") + "원"; }
 
   /* ───────── routing ───────── */
   var stack = ["intro"];
@@ -777,7 +772,6 @@ details[open] .caret{transform:rotate(180deg)}
     go(stack[stack.length-1] || "intro", false);
   });
   $("#go-capture").addEventListener("click", function(){ go("capture"); });
-  $("#go-guide").addEventListener("click", function(){ go("guide"); });
 
   /* ───────── chips ───────── */
   function chipGroup(id, key){
@@ -1091,56 +1085,6 @@ details[open] .caret{transform:rotate(180deg)}
   }
   function arr(v){ return Array.isArray(v) ? v : []; }
 
-  function usageCard(){
-    var u = state.usage;
-    if(!u) return "";
-    var t = readTotals();
-    var rate = u.usdKrw || 1400;
-    var priced = typeof u.costUsd === "number";
-    var o = [];
-
-    o.push('<div class="usage mt-48">');
-    o.push('<p class="kicker" style="margin-bottom:4px">API Usage</p>');
-
-    o.push('<div class="usage__row"><span>이번 해석</span><b>');
-    o.push(priced ? usd(u.costUsd) + "<i>" + won(u.costUsd, rate) + "</i>"
-                  : num(u.inputTokens + u.cachedTokens + u.outputTokens) + " 토큰");
-    o.push("</b></div>");
-    o.push('<p class="usage__meta">입력 ' + num(u.inputTokens) +
-      (u.cachedTokens ? " · 캐시 " + num(u.cachedTokens) : "") +
-      " · 출력 " + num(u.outputTokens) + " 토큰 · " + esc(u.model) + "</p>");
-
-    if(t.count > 1){
-      o.push('<div class="usage__row"><span>누적 ' + num(t.count) + '회</span><b>');
-      o.push(t.costed ? usd(t.cost) + "<i>" + won(t.cost, rate) + "</i>"
-                      : num(t.input + t.cached + t.output) + " 토큰");
-      o.push("</b></div>");
-      o.push('<p class="usage__meta">입력 ' + num(t.input) + " · 출력 " + num(t.output) + " 토큰" +
-        (t.costed && t.costed < t.count
-          ? " · " + num(t.count - t.costed) + "회는 요금표에 없는 모델이라 비용에서 뺐습니다"
-          : "") + "</p>");
-      o.push('<div class="usage__foot"><button class="btn btn--quiet" id="u-reset" type="button">누적 지우기</button></div>');
-    }
-
-    o.push('<p class="usage__meta" style="padding-top:8px">' + (priced
-      ? "원화는 1 USD = " + num(rate) + "원 기준 환산입니다. 누적은 이 기기에만 저장되며, 실제 청구액은 OpenAI 대시보드를 보세요."
-      : esc(u.model) + " 단가가 요금표에 없어 비용을 계산하지 않았습니다. 서버의 OPENAI_PRICES 환경 변수에 단가를 넣으면 표시됩니다.") + "</p>");
-    o.push("</div>");
-    return o.join("");
-  }
-
-  function bindUsageReset(){
-    var btn = $("#u-reset");
-    if(!btn) return;
-    btn.addEventListener("click", function(){
-      var card = btn.closest(".usage");
-      writeTotals(Object.assign({}, ZERO));
-      var tmp = document.createElement("div");
-      tmp.innerHTML = usageCard();
-      if(card && tmp.firstChild) card.replaceWith(tmp.firstChild);
-    });
-  }
-
   function renderResult(d){
     d = d || {};
     var out = [];
@@ -1242,12 +1186,9 @@ details[open] .caret{transform:rotate(180deg)}
       out.push('<p class="quote" style="margin-top:16px">' + esc(d.question) + "</p></div>");
     }
 
-    out.push(usageCard());
-
     out.push('<div class="stack gap-12 mt-48">');
     out.push('<button class="btn btn--ghost" id="r-again" type="button">다시 해석하기</button>');
     out.push('<button class="btn btn--ghost" id="r-shots" type="button">사진 다시 찍기</button>');
-    out.push('<button class="btn btn--ghost" id="r-guide" type="button">손금 사전 보기</button>');
     out.push('<button class="btn btn--quiet" id="r-home" type="button">처음으로</button>');
     out.push("</div>");
 
@@ -1258,10 +1199,8 @@ details[open] .caret{transform:rotate(180deg)}
     box.hidden = false;
     window.scrollTo(0,0);
 
-    bindUsageReset();
     $("#r-again").addEventListener("click", analyze);
     $("#r-shots").addEventListener("click", function(){ stack.pop(); go("capture", false); });
-    $("#r-guide").addEventListener("click", function(){ go("guide"); });
     $("#r-home").addEventListener("click", function(){ stack = ["intro"]; go("intro", false); });
   }
 
